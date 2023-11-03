@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
-    telegram_id = models.CharField(max_length=100, unique=True, null=True, blank=True)
+    telegram_handle = models.CharField(max_length=100, unique=True, null=True, blank=True)
 
 
 class APIKey(models.Model):
