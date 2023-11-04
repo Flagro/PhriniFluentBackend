@@ -80,6 +80,8 @@ doc/cdoc/build
 .cache
 pip-wheel-metadata
 .python-version
+#venv
+.venv
 
 # Paver generated files #
 #########################
