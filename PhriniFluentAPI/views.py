@@ -50,7 +50,7 @@ def custom_user_detail(request, pk):
 # APIKey Views
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def apikey_list(request):
+def api_key_list(request):
     if request.method == 'GET':
         apikeys = APIKey.objects.filter(user=request.user)
         serializer = APIKeySerializer(apikeys, many=True)
@@ -65,7 +65,7 @@ def apikey_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def apikey_detail(request, pk):
+def api_key_detail(request, pk):
     try:
         apikey = APIKey.objects.get(pk=pk, user=request.user)
     except APIKey.DoesNotExist:
@@ -128,7 +128,7 @@ def language_detail(request, pk):
 # WordGroup Views
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def wordgroup_list(request):
+def word_group_list(request):
     if request.method == 'GET':
         wordgroups = WordGroup.objects.all()
         serializer = WordGroupSerializer(wordgroups, many=True)
@@ -143,7 +143,7 @@ def wordgroup_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def wordgroup_detail(request, pk):
+def word_group_detail(request, pk):
     try:
         wordgroup = WordGroup.objects.get(pk=pk)
     except WordGroup.DoesNotExist:
