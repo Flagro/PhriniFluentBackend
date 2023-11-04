@@ -9,6 +9,7 @@ djangorestframework = "*"
 python-decouple = "*"
 typing-extensions = "*"
 psycopg2-binary = "*"
+django-oauth-toolkit = "*"
 
 [dev-packages]
 
