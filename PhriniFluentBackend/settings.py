@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'oauth2_provider',
     'PhriniFluentAPI'
 ]
@@ -111,11 +112,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        # Add any other authentication classes here
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # Add this for OAuth
+        'rest_framework.authentication.TokenAuthentication',  # Add this for token auth
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-        # Add other permission classes here
     ],
 }
 
