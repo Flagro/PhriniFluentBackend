@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'phrini_fluent_words'
+    'phrini_fluent_words',
+    'phrini_fluent_users',
 ]
 
 MIDDLEWARE = [
@@ -118,7 +119,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-AUTH_USER_MODEL = 'phrini_fluent_words.CustomUser'
+AUTH_USER_MODEL = 'phrini_fluent_users.PhriniFluentUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
