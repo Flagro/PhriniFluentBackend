@@ -1,20 +1,7 @@
 from django.contrib import admin
 from .models import (
-    CustomUser, APIKey, Language, 
-    WordGroup, Word, WordDescription, UserWordGroup
+    Language, WordGroup, Word, WordDescription, UserWordGroup
 )
-
-@admin.register(CustomUser)
-class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'telegram_handle', 'is_staff', 'is_active')
-    search_fields = ('username', 'email', 'telegram_handle')
-    list_filter = ('is_staff', 'is_active')
-
-@admin.register(APIKey)
-class APIKeyAdmin(admin.ModelAdmin):
-    list_display = ('user', 'api_key', 'date_issued', 'active')
-    list_filter = ('active', 'date_issued')
-    search_fields = ('user__username', 'api_key')
 
 @admin.register(Language)
 class LanguageAdmin(admin.ModelAdmin):

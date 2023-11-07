@@ -1,19 +1,6 @@
 from rest_framework import serializers
-from .models import CustomUser, APIKey, Language, WordGroup, Word, WordDescription, UserWordGroup
+from .models import Language, WordGroup, Word, WordDescription, UserWordGroup
 
-class CustomUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'telegram_handle', 'email', 'api_keys', 'word_groups']
-        extra_kwargs = {
-            'api_keys': {'read_only': True},
-            'word_groups': {'read_only': True}
-        }
-
-class APIKeySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = APIKey
-        fields = ['id', 'user', 'api_key', 'date_issued', 'permissions', 'active']
 
 class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
