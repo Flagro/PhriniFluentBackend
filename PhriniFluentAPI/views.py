@@ -9,7 +9,7 @@ from .serializers import (CustomUserSerializer, APIKeySerializer, LanguageSerial
 
 # User Views
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])  # or use [AllowAny] if you want it to be accessible without authentication
+@permission_classes([IsAuthenticated])
 def custom_user_list(request):
     if request.method == 'GET':
         users = CustomUser.objects.all()
