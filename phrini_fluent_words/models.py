@@ -3,28 +3,31 @@ from ..phrini_fluent_users.models import PhriniFluentUser
 
 
 class Language(models.Model):
-    language_tag = models.CharField(max_length=10)
     language_name = models.CharField(max_length=50)
 
 
 class WordGroup(models.Model):
     name = models.CharField(max_length=100)
+    is_global = models.BooleanField(default=False)  # Indicates if the word group is public
+    owner = models.ForeignKey(
+        PhriniFluentUser,
+        on_delete=models.CASCADE,
+        related_name='owned_word_groups',
+        null=True,  # Null signifies a public word group if no owner is set
+        blank=True
+    )
+    languages = models.ManyToManyField(Language, through='WordGroupDescription')
+
+
+class WordGroupDescription(models.Model):
+    word_group = models.ForeignKey(WordGroup, on_delete=models.CASCADE, related_name='descriptions')
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
-    description = models.TextField(blank=True, null=True)
-    is_global = models.BooleanField(default=False)
-    users = models.ManyToManyField(PhriniFluentUser, through='UserWordGroup', related_name='word_groups')
-
-
-class UserWordGroup(models.Model):
-    user = models.ForeignKey(PhriniFluentUser, on_delete=models.CASCADE)
-    word_group = models.ForeignKey(WordGroup, on_delete=models.CASCADE)
-    date_added = models.DateTimeField(auto_now_add=True)
+    description_text = models.TextField()
 
 
 class Word(models.Model):
     word_group = models.ForeignKey(WordGroup, on_delete=models.CASCADE, related_name='words')
     text = models.CharField(max_length=100)
-    language = models.ForeignKey(Language, on_delete=models.CASCADE)
 
 
 class WordDescription(models.Model):
