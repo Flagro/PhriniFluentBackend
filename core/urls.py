@@ -1,5 +1,5 @@
 """
-URL configuration for PhriniFluentBackend project.
+URL configuration for core project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -19,6 +19,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('PhriniFluentAPI/', include('PhriniFluentAPI.urls')),  # Include the URLs from the 'myapp' application
-    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('words/', include('words.urls')),
 ]

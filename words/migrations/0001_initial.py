@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.CharField(max_length=100)),
-                ('language', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='PhriniFluentAPI.language')),
+                ('language', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='words.language')),
             ],
         ),
         migrations.CreateModel(
@@ -74,8 +74,8 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100)),
                 ('description', models.TextField(blank=True, null=True)),
                 ('is_global', models.BooleanField(default=False)),
-                ('language', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='PhriniFluentAPI.language')),
-                ('users', models.ManyToManyField(related_name='word_groups', through='PhriniFluentAPI.UserWordGroup', to=settings.AUTH_USER_MODEL)),
+                ('language', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='words.language')),
+                ('users', models.ManyToManyField(related_name='word_groups', through='words.UserWordGroup', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -83,14 +83,14 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('description_text', models.TextField()),
-                ('language', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='PhriniFluentAPI.language')),
-                ('word', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='descriptions', to='PhriniFluentAPI.word')),
+                ('language', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='words.language')),
+                ('word', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='descriptions', to='words.word')),
             ],
         ),
         migrations.AddField(
             model_name='word',
             name='word_group',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='words', to='PhriniFluentAPI.wordgroup'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='words', to='words.wordgroup'),
         ),
         migrations.AddField(
             model_name='userwordgroup',
@@ -100,7 +100,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='userwordgroup',
             name='word_group',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='PhriniFluentAPI.wordgroup'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='words.wordgroup'),
         ),
         migrations.CreateModel(
             name='APIKey',

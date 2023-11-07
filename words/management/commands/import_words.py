@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from PhriniFluentAPI.models import Word, WordDescription, WordGroup  # Replace with your actual model names and app name
+from words.models import Word, WordDescription, WordGroup  # Replace with your actual model names and app name
 import json
 
 class Command(BaseCommand):
