@@ -19,5 +19,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('words/', include('words.urls')),
+    path('phrini_fluent_words/', include('phrini_fluent_words.urls')),
 ]

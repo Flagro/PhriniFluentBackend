@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class WordsConfig(AppConfig):
+class PhriniFluentWordsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'words'
+    name = 'phrini_fluent_words'
