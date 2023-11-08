@@ -13,7 +13,7 @@ class Command(BaseCommand):
             data = json.load(file)
 
         for language_name, content in data.items():
-            word_group, created = WordGroup.objects.get_or_create(name=language_name)
+            word_group, created = WordGroup.objects.get_or_create(name=language_name, is_global=True)
             
             # Assuming you have a Language model instance for each language name
             for lang_name, description in content['description'].items():
