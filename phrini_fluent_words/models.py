@@ -1,5 +1,5 @@
 from django.db import models
-from ..phrini_fluent_users.models import PhriniFluentUser
+from phrini_fluent_users.models import PhriniFluentUser
 
 
 class Language(models.Model):
