@@ -1,46 +1,38 @@
+from django.contrib.auth import authenticate
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from .models import PhriniFluentUser
-from .serializers import PhriniFluentUserSerializer
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny
+from .serializers import SignupSerializer, UserSerializer, TokenSerializer
 
 
-# User Views
-@api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
-def custom_user_list(request):
-    if request.method == 'GET':
-        users = PhriniFluentUser.objects.all()
-        serializer = PhriniFluentUserSerializer(users, many=True)
-        return Response(serializer.data)
+class SignupView(APIView):
+    permission_classes = (AllowAny,)
 
-    elif request.method == 'POST':
-        serializer = PhriniFluentUserSerializer(data=request.data)
+    def post(self, request, format=None):
+        serializer = SignupSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            user = serializer.save()
+            token = Token.objects.get(user=user)
+            return Response({
+                'user': UserSerializer(user).data,
+                'token': token.key
+            }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([IsAuthenticated])
-def custom_user_detail(request, pk):
-    try:
-        user = PhriniFluentUser.objects.get(pk=pk)
-    except PhriniFluentUser.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'GET':
-        serializer = PhriniFluentUserSerializer(user)
-        return Response(serializer.data)
+class LoginView(APIView):
+    permission_classes = (AllowAny,)
 
-    elif request.method == 'PUT':
-        serializer = PhriniFluentUserSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def post(self, request, format=None):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({
+                'user': UserSerializer(user).data,
+                'token': token.key
+            })
+        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
