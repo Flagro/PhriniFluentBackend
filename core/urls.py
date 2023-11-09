@@ -20,4 +20,5 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('phrini_fluent_words/', include('phrini_fluent_words.urls')),
+    path('phrini_fluent_users/', include('phrini_fluent_users.urls')),
 ]
