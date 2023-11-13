@@ -1,5 +1,7 @@
 # 🌍 PhriniFluent Backend
 
+![PhriniFluent Logo](logo.png)
+
 🎉 Welcome to the *backend repository* of **PhriniFluent**, an open-source language learning platform that's all about making language learning fun and accessible! This repository is the heart and soul of PhriniFluent, powering all the amazing features our users love.
 
 🔗 [PhriniFluent Main Project](https://github.com/Flagro/PhriniFluent)
