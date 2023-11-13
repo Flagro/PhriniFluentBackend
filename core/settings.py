@@ -28,6 +28,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
+SECURE_SSL_REDIRECT = True
 
 # Application definition
 
