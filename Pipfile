@@ -11,6 +11,8 @@ typing-extensions = "*"
 psycopg2-binary = "*"
 django-oauth-toolkit = "*"
 django-cors-headers = "*"
+pip = "*"
+gunicorn = "*"
 
 [dev-packages]
 
