@@ -37,7 +37,11 @@ ENVIRONMENT = config('ENVIRONMENT', default='development')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = ENVIRONMENT == 'development'
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+# Allowed hosts
+if ENVIRONMENT == 'production':
+    ALLOWED_HOSTS = ['api.phrinifluent.com']
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # SSL Settings
 if ENVIRONMENT == 'production':
