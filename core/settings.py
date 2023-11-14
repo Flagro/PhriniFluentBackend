@@ -39,7 +39,13 @@ DEBUG = ENVIRONMENT == 'development'
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
-SECURE_SSL_REDIRECT = True
+# SSL Settings
+if ENVIRONMENT == 'production':
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    # Other production specific settings...
+else:
+    SECURE_SSL_REDIRECT = False
 
 # Application definition
 
