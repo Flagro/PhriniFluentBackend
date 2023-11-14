@@ -16,6 +16,13 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Nginx will serve from here in production
+
+# Add MEDIA_URL and MEDIA_ROOT if you have media files
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -24,11 +31,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+# Environment (Development or Production)
+ENVIRONMENT = config('ENVIRONMENT', default='development')
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = ENVIRONMENT == 'development'
 
-SECURE_SSL_REDIRECT = True
+# Allowed hosts
+if ENVIRONMENT == 'production':
+    ALLOWED_HOSTS = ['api.phrinifluent.com']
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# SSL Settings
+if ENVIRONMENT == 'production':
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    # Other production specific settings...
+else:
+    SECURE_SSL_REDIRECT = False
 
 # Application definition
 
