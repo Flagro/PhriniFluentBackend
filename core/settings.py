@@ -167,3 +167,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Admin user
+ADMIN_USERNAME = config('ADMIN_USERNAME')
+ADMIN_EMAIL = config('ADMIN_EMAIL')
+ADMIN_PASSWORD = config('ADMIN_PASSWORD')
