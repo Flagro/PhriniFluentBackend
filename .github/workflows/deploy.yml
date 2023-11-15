@@ -1,0 +1,28 @@
+name: Deploy with Docker on VPS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
+        script: |
+          cd /path/to/your/deployment
+          git pull origin main
+          docker-compose -f docker-compose.prod.yml build
+          docker-compose -f docker-compose.prod.yml up -d
+          docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
+          docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
+          # Optional: Commands to create/update the admin user
