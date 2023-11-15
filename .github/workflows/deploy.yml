@@ -34,8 +34,8 @@ jobs:
           echo "ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}" >> .env
           echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}" >> .env
           echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> .env
-          docker-compose -f docker-compose.prod.yml build
-          docker-compose -f docker-compose.prod.yml up -d
-          docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
-          docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
-          docker-compose -f docker-compose.prod.yml exec web python manage.py createadmin
+          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml build
+          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml up -d
+          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml exec web python manage.py migrate
+          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
+          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml exec web python manage.py createadmin
