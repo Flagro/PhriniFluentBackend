@@ -26,6 +26,14 @@ jobs:
             git clone https://github.com/Flagro/PhriniFluentBackend.git ~/PhriniFluentBackend
             cd ~/PhriniFluentBackend
           fi
+          cp .env-example .env
+          echo "ENVIRONMENT=deployment" >> .env
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}" >> .env
+          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}" >> .env
+          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> .env
           docker-compose -f docker-compose.prod.yml build
           docker-compose -f docker-compose.prod.yml up -d
           docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
