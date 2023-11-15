@@ -30,4 +30,4 @@ jobs:
           docker-compose -f docker-compose.prod.yml up -d
           docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
           docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
-          # Optional: Commands to create/update the admin user
+          docker-compose -f docker-compose.prod.yml exec web python manage.py createadmin
