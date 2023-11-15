@@ -19,8 +19,13 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
-          cd /path/to/your/deployment
-          git pull origin main
+          if [ -d "~/PhriniFluentBackend" ]; then
+            cd ~/PhriniFluentBackend
+            git pull origin main
+          else
+            git clone https://github.com/Flagro/PhriniFluentBackend.git ~/PhriniFluentBackend
+            cd ~/PhriniFluentBackend
+          fi
           docker-compose -f docker-compose.prod.yml build
           docker-compose -f docker-compose.prod.yml up -d
           docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
