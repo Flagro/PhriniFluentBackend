@@ -19,7 +19,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
-          if [ -d "~/PhriniFluentBackend" ]; then
+          if [ -d $HOME/PhriniFluentBackend ]; then
             cd ~/PhriniFluentBackend
             git pull origin main
           else
