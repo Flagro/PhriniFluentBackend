@@ -27,7 +27,7 @@ jobs:
             cd ~/PhriniFluentBackend
           fi
           cp .env-example .env
-          echo "ENVIRONMENT=deployment" >> .env
+          echo "ENVIRONMENT=production" >> .env
           echo 'SECRET_KEY=${{ secrets.SECRET_KEY }}' >> .env
           echo "DB_USER=${{ secrets.DB_USER }}" >> .env
           echo 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' >> .env
