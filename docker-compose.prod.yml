@@ -23,7 +23,7 @@ services:
       - static_volume:/code/staticfiles
       - ./conf/nginx.conf:/etc/nginx/conf.d/default.conf
       - /etc/ssl/certs/phrinifluent.crt:/etc/ssl/certs/phrinifluent.crt:ro
-      - /etc/ssl/certs/phrinifluent.key:/etc/ssl/certs/phrinifluent.key:ro
+      - /etc/ssl/private/phrinifluent.key:/etc/ssl/private/phrinifluent.key:ro
     depends_on:
       - web
     networks:
