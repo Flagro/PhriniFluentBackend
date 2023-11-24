@@ -21,6 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Nginx will serve from here in production
 
+# Init words path
+WORDS_JSON_PATH = config('WORDS_JSON_PATH')
+
 # Add MEDIA_URL and MEDIA_ROOT if you have media files
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
