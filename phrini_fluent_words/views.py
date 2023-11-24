@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 import random
 from .models import WordGroup, Word, Language
@@ -18,6 +18,7 @@ def get_language_or_default(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def public_word_group_list(request):
     language = get_language_or_default(request)
     word_groups = WordGroup.objects.filter(
@@ -41,6 +42,7 @@ def private_word_group_list(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def random_word_from_group(request, group_id):
     word_group = get_object_or_404(WordGroup, id=group_id)
     if word_group.is_global or (word_group.owner and word_group.owner == request.user):
@@ -54,6 +56,7 @@ def random_word_from_group(request, group_id):
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def word_similarity(request, word_id):
     word = get_object_or_404(Word, id=word_id)
     input_text = request.data.get('text', '')
