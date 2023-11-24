@@ -59,8 +59,9 @@ def random_word_from_group(request, group_id):
 @permission_classes([AllowAny])
 def word_similarity(request, word_id):
     word = get_object_or_404(Word, id=word_id)
+    answer_text = word.text
     input_text = request.data.get('text', '')
     # Here you will implement your similarity logic.
     # For now, let's just return a dummy similarity score.
-    similarity_score = 100 if word.lower().strip() == input_text.lower().strip() else 0
+    similarity_score = 100 if answer_text.lower().strip() == input_text.lower().strip() else 0
     return Response({'similarity': similarity_score})
