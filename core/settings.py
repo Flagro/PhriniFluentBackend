@@ -154,6 +154,8 @@ AUTH_USER_MODEL = 'phrini_fluent_users.PhriniFluentUser'
 
 LANGUAGE_CODE = 'en-us'
 
+DESCRIPTIONS_LANGUAGE = 'english'
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True

@@ -11,7 +11,7 @@ from .serializers import WordGroupSerializer, WordSerializer
 
 # Helper function to get the language or default
 def get_language_or_default(request):
-    default_language_code = getattr(settings, 'LANGUAGE_CODE', 'en-us')
+    default_language_code = getattr(settings, 'DESCRIPTIONS_LANGUAGE', 'english')
     language_name = request.query_params.get('language', default_language_code)
     language, _ = Language.objects.get_or_create(language_name=language_name)
     return language
