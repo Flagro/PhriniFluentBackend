@@ -45,7 +45,7 @@ DEBUG = ENVIRONMENT == 'development'
 if ENVIRONMENT == 'production':
     ALLOWED_HOSTS = ['api.phrinifluent.com']
 else:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 
 # SSL Settings
 if ENVIRONMENT == 'production':
