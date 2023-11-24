@@ -17,5 +17,8 @@ RUN pip install pipenv && pipenv install --system
 # Copy project
 COPY . /code/
 
+# Copy the initial_data directory to the container
+COPY ./initial_data /app/initial_data
+
 # Collect static files
 RUN python manage.py collectstatic --noinput
