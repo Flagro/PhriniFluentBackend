@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   web:
+    restart: always
     build: .
     command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
     volumes:
@@ -15,6 +16,7 @@ services:
       - internal
 
   nginx:
+    restart: always
     image: nginx:1.21
     ports:
       - "80:80"
@@ -30,6 +32,7 @@ services:
       - internal
 
   db:
+    restart: always
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
