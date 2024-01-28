@@ -35,6 +35,8 @@ jobs:
           echo "ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}" >> .env
           echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}" >> .env
           echo 'ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}' >> .env
+          echo "${{ secrets.SSL_CERTIFICATE }}" > ssl_certificate.crt
+          echo "${{ secrets.SSL_KEY }}" > ssl_private.key
           sudo ../limited-docker-compose.sh -f docker-compose.prod.yml up -d --build
           sudo ../limited-docker-compose.sh -f docker-compose.prod.yml run --rm web python manage.py migrate
           sudo ../limited-docker-compose.sh -f docker-compose.prod.yml run --rm web python manage.py collectstatic --noinput
