@@ -35,30 +35,6 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
 
-  migrate:
-    image: python:3.9
-    volumes:
-      - .:/app
-    command: python manage.py migrate
-    depends_on:
-      - db
-
-  collectstatic:
-    image: python:3.9
-    volumes:
-      - .:/app
-    command: python manage.py collectstatic --noinput
-    depends_on:
-      - web
-
-  createadmin:
-    image: python:3.9
-    volumes:
-      - .:/app
-    command: python manage.py createadmin
-    depends_on:
-      - web
-
 volumes:
   postgres_data:
   static_volume:
