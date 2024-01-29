@@ -42,6 +42,30 @@ services:
     networks:
       - internal
 
+  migrate:
+    image: python:3.9
+    volumes:
+      - .:/app
+    command: python manage.py migrate
+    depends_on:
+      - db
+
+  collectstatic:
+    image: python:3.9
+    volumes:
+      - .:/app
+    command: python manage.py collectstatic --noinput
+    depends_on:
+      - web
+
+  createadmin:
+    image: python:3.9
+    volumes:
+      - .:/app
+    command: python manage.py createadmin
+    depends_on:
+      - web
+
 # Volumes
 volumes:
   postgres_data:
