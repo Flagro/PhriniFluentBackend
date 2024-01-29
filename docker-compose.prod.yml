@@ -5,7 +5,6 @@ services:
     restart: always
     build: .
     volumes:
-      - .:/app
       - static_volume:/app/staticfiles
     env_file:
       - .env
@@ -60,7 +59,6 @@ services:
     depends_on:
       - web
 
-# Volumes
 volumes:
   postgres_data:
   static_volume:
