@@ -22,7 +22,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Nginx will serve from here in production
 
 # Init words path
-WORDS_JSON_PATH = config('WORDS_JSON_PATH')
+WORDS_JSON_PATH = "initial_data/words.json"
 
 # Add MEDIA_URL and MEDIA_ROOT if you have media files
 # MEDIA_URL = '/media/'
