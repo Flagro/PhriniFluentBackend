@@ -6,17 +6,17 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Set work directory
-WORKDIR /code
+WORKDIR /app
 
 # Install dependencies
-COPY Pipfile Pipfile.lock /code/
+COPY Pipfile Pipfile.lock /app/
 RUN pip install pipenv && pipenv install --system
 
 # Copy project
-COPY . /code/
+COPY . /app/
 
 # Copy the initial_data directory to the container
-COPY ./initial_data /app/initial_data
+COPY ./initial_data /data/initial_data
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
