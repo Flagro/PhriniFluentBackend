@@ -5,14 +5,11 @@ services:
     restart: always
     build: .
     volumes:
-      - .:/app
       - static_volume:/app/staticfiles
     env_file:
       - .env
     depends_on:
       - db
-    networks:
-      - internal
 
   nginx:
     restart: always
@@ -27,8 +24,6 @@ services:
       - ./ssl_private.key:/etc/ssl/private/phrinifluent.key:ro
     depends_on:
       - web
-    networks:
-      - internal
 
   db:
     restart: always
@@ -39,15 +34,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
-    networks:
-      - internal
 
-# Volumes
 volumes:
   postgres_data:
   static_volume:
-
-# Networks
-networks:
-  internal:
-    driver: bridge

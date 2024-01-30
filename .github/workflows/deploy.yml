@@ -37,6 +37,6 @@ jobs:
           echo "${{ secrets.SSL_CERTIFICATE }}" > ssl_certificate.crt
           echo "${{ secrets.SSL_KEY }}" > ssl_private.key
           sudo ../limited-docker-compose.sh -f docker-compose.prod.yml up -d --build
-          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml run --rm web python manage.py migrate
-          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml run --rm web python manage.py collectstatic --noinput
-          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml run --rm web python manage.py createadmin
+          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml exec web python manage.py migrate
+          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
+          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml exec web python manage.py createadmin
