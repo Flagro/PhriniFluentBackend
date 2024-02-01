@@ -20,3 +20,10 @@ spec:
         envFrom:
         - secretRef:
           name: phrinifluent-db-secrets
+        volumeMounts:
+        - name: phrinifluent-db-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: phrinifluent-db-storage
+        persistentVolumeClaim:
+          claimName: phrinifluent-db-pvc
