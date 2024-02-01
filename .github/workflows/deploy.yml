@@ -43,9 +43,9 @@ jobs:
           --from-literal=SSL_CERTIFICATE="$SSL_CERTIFICATE" \
           --from-literal=SSL_KEY="$SSL_KEY" \
           -o yaml --dry-run=client | kubectl apply -f -
-        kubectl create secret generic phrinifluent-tls-secrets \
-          --from-literal=SSL_CERTIFICATE="$SSL_CERTIFICATE" \
-          --from-literal=SSL_KEY="$SSL_KEY" \
+        kubectl create secret tls phrinifluent-tls-secrets \
+          --cert="$(echo $SSL_CERTIFICATE)" \
+          --key="$(echo $SSL_KEY)" \
           -o yaml --dry-run=client | kubectl apply -f -
 
     - name: Deploy to Kubernetes
