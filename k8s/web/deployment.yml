@@ -20,5 +20,9 @@ spec:
         envFrom:
         - secretRef:
           name: phrinifluent-backend-secrets
+        - secretRef:
+          name: phrinifluent-db-secrets
         - configMapRef:
           name: phrinifluent-backend-config
+        - configMapRef:
+          name: phrinifluent-db-config
