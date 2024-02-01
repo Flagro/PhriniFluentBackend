@@ -17,6 +17,6 @@ spec:
         image: ghcr.io/flagro/phrinifluentbackend:main
         ports:
         - containerPort: 8000
-        env:
-        - name: ENVIRONMENT
-          value: "production"
+        envFrom:
+        - secretRef:
+          name: phrinifluent-backend-secrets
