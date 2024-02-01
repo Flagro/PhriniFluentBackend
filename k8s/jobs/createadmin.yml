@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: phrinifluent-createadmin-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: phrinifluent-createadmin
+        image: ghcr.io/flagro/phrinifluentbackend:main
+        command: ["python", "manage.py", "createadmin"]
+        envFrom:
+        - secretRef:
+          name: phrinifluent-backend-secrets
+        - secretRef:
+          name: phrinifluent-db-secrets
+        - configMapRef:
+          name: phrinifluent-backend-config
+        - configMapRef:
+          name: phrinifluent-db-config
+      restartPolicy: Never
+  backoffLimit: 4

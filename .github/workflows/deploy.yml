@@ -1,42 +1,56 @@
-name: Deploy with Docker on VPS
+name: Deploy to Kubernetes
 
 on:
-  push:
-    branches: [ main ]
+  workflow_run:
+    workflows: ["Publish Docker Image"]
+    types:
+      - completed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    - name: Deploy to VPS
-      uses: appleboy/ssh-action@master
+    - name: Configure kubectl
+      uses: azure/k8s-set-context@v1
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        port: 22
-        script: |
-          if [ -d $HOME/PhriniFluentBackend ]; then
-            cd ~/PhriniFluentBackend
-            git pull origin main
-          else
-            git clone https://github.com/Flagro/PhriniFluentBackend.git ~/PhriniFluentBackend
-            cd ~/PhriniFluentBackend
-          fi
-          cp .env-example .env
-          echo "ENVIRONMENT=production" >> .env
-          echo 'SECRET_KEY=${{ secrets.SECRET_KEY }}' >> .env
-          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
-          echo 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' >> .env
-          echo "ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}" >> .env
-          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}" >> .env
-          echo 'ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}' >> .env
-          echo "${{ secrets.SSL_CERTIFICATE }}" > ssl_certificate.crt
-          echo "${{ secrets.SSL_KEY }}" > ssl_private.key
-          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml up -d --build
-          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml run --rm web python manage.py migrate
-          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml run --rm web python manage.py collectstatic --noinput
-          sudo ../limited-docker-compose.sh -f docker-compose.prod.yml run --rm web python manage.py createadmin
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+    - name: Create and Apply Kubernetes Secrets
+      env:
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+        ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+        ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        SSL_CERTIFICATE: ${{ secrets.SSL_CERTIFICATE }}
+        SSL_KEY: ${{ secrets.SSL_KEY }}
+      run: |
+        kubectl create secret generic phrinifluent-db-secrets \
+          --from-literal=POSTGRES_USER="$DB_USER" \
+          --from-literal=POSTGRES_PASSWORD="$DB_PASSWORD" \
+          --from-literal=POSTGRES_DB="$DB_NAME" \
+          -o yaml --dry-run=client | kubectl apply -f -
+        kubectl create secret generic phrinifluent-backend-secrets \
+          --from-literal=SECRET_KEY="$SECRET_KEY" \
+          --from-literal=ADMIN_USERNAME="$ADMIN_USERNAME" \
+          --from-literal=ADMIN_EMAIL="$ADMIN_EMAIL" \
+          --from-literal=ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+          --from-literal=SSL_CERTIFICATE="$SSL_CERTIFICATE" \
+          --from-literal=SSL_KEY="$SSL_KEY" \
+          -o yaml --dry-run=client | kubectl apply -f -
+        kubectl create secret tls phrinifluent-tls-secrets \
+          --cert="$(echo $SSL_CERTIFICATE)" \
+          --key="$(echo $SSL_KEY)" \
+          -o yaml --dry-run=client | kubectl apply -f -
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f ./k8s/db/
+        kubectl apply -f ./k8s/ingress/
+        kubectl apply -f ./k8s/jobs/
+        kubectl apply -f ./k8s/web/

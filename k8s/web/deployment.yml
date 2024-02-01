@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phrinifluent-backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phrinifluent-backend
+  template:
+    metadata:
+      labels:
+        app: phrinifluent-backend
+    spec:
+      containers:
+      - name: phrinifluent-backend
+        image: ghcr.io/flagro/phrinifluentbackend:main
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - secretRef:
+          name: phrinifluent-backend-secrets
+        - secretRef:
+          name: phrinifluent-db-secrets
+        - configMapRef:
+          name: phrinifluent-backend-config
+        - configMapRef:
+          name: phrinifluent-db-config

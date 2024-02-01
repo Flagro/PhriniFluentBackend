@@ -23,7 +23,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432"  # This port will not be accessible from the host, only from the 'web' service
+      - "5432"
     networks:
       - internal
 
