@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-deployment
+  name: phrinifluent-db-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: db
+      app: phrinifluent-db
   template:
     metadata:
       labels:
-        app: db
+        app: phrinifluent-db
     spec:
       containers:
-      - name: db
+      - name: phrinifluent-db
         image: postgres
         ports:
         - containerPort: 5432
         envFrom:
         - secretRef:
-          name: db-secrets
+          name: phrinifluent-db-secrets
