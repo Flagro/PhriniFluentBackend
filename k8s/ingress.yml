@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: web-ingress
+  name: phrinifluent-ingress
 spec:
   rules:
   - host: api.phrinifluent.com
@@ -11,7 +11,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: web
+            name: phrinifluent-backend-service
             port:
               number: 8000
   tls:
