@@ -14,3 +14,7 @@ spec:
             name: web
             port:
               number: 8000
+  tls:
+  - hosts:
+    - api.phrinifluent.com
+    secretName: tls-secret
