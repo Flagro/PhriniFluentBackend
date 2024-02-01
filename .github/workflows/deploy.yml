@@ -23,7 +23,6 @@ jobs:
       env:
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_NAME: ${{ secrets.DB_NAME }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
         ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
@@ -31,14 +30,20 @@ jobs:
         SSL_CERTIFICATE: ${{ secrets.SSL_CERTIFICATE }}
         SSL_KEY: ${{ secrets.SSL_KEY }}
       run: |
-        kubectl create secret generic phrinifluent-secrets \
+        kubectl create secret generic phrinifluent-db-secrets \
           --from-literal=POSTGRES_USER="$DB_USER" \
           --from-literal=POSTGRES_PASSWORD="$DB_PASSWORD" \
           --from-literal=POSTGRES_DB="$DB_NAME" \
+          -o yaml --dry-run=client | kubectl apply -f -
+        kubectl create secret generic phrinifluent-backend-secrets \
           --from-literal=SECRET_KEY="$SECRET_KEY" \
           --from-literal=ADMIN_USERNAME="$ADMIN_USERNAME" \
           --from-literal=ADMIN_EMAIL="$ADMIN_EMAIL" \
           --from-literal=ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+          --from-literal=SSL_CERTIFICATE="$SSL_CERTIFICATE" \
+          --from-literal=SSL_KEY="$SSL_KEY" \
+          -o yaml --dry-run=client | kubectl apply -f -
+        kubectl create secret generic phrinifluent-tls-secrets \
           --from-literal=SSL_CERTIFICATE="$SSL_CERTIFICATE" \
           --from-literal=SSL_KEY="$SSL_KEY" \
           -o yaml --dry-run=client | kubectl apply -f -
