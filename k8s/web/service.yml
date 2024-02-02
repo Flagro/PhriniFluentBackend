@@ -6,6 +6,6 @@ spec:
   selector:
     app: phrinifluent-backend
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 8000
+    - protocol: TCP
+      port: 80
+      targetPort: 8000

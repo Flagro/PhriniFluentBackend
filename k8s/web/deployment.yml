@@ -13,16 +13,16 @@ spec:
         app: phrinifluent-backend
     spec:
       containers:
-      - name: phrinifluent-backend
-        image: ghcr.io/flagro/phrinifluentbackend:main
-        ports:
-        - containerPort: 8000
-        envFrom:
-        - secretRef:
-          name: phrinifluent-backend-secrets
-        - secretRef:
-          name: phrinifluent-db-secrets
-        - configMapRef:
-          name: phrinifluent-backend-config
-        - configMapRef:
-          name: phrinifluent-db-config
+        - name: phrinifluent-backend
+          image: ghcr.io/flagro/phrinifluentbackend:main
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+              name: phrinifluent-backend-secrets
+            - secretRef:
+              name: phrinifluent-db-secrets
+            - configMapRef:
+              name: phrinifluent-backend-config
+            - configMapRef:
+              name: phrinifluent-db-config

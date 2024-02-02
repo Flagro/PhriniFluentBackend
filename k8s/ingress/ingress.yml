@@ -4,17 +4,17 @@ metadata:
   name: phrinifluent-ingress
 spec:
   rules:
-  - host: api.phrinifluent.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: phrinifluent-backend-service
-            port:
-              number: 8000
+    - host: api.phrinifluent.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: phrinifluent-backend-service
+                port:
+                  number: 8000
   tls:
-  - hosts:
-    - api.phrinifluent.com
-    secretName: phrinifluent-tls-secrets
+    - hosts:
+      - api.phrinifluent.com
+      secretName: phrinifluent-tls-secrets
