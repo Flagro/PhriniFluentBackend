@@ -25,4 +25,4 @@ jobs:
           pipenv install --dev
 
       - name: Check if Django project compiles
-        run: python manage.py check
+        run: pipenv run python manage.py check
