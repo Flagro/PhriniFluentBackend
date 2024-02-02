@@ -27,11 +27,9 @@ services:
     networks:
       - internal
 
-# Volumes
 volumes:
   postgres_data:
 
-# Networks
 networks:
   internal:
     driver: bridge
