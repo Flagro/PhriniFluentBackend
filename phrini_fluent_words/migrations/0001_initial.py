@@ -15,58 +15,137 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Language',
+            name="Language",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('language_name', models.CharField(max_length=50)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("language_name", models.CharField(max_length=50)),
             ],
         ),
         migrations.CreateModel(
-            name='Word',
+            name="Word",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(max_length=100)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
-            name='WordGroup',
+            name="WordGroup",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('is_global', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("is_global", models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
-            name='WordGroupDescription',
+            name="WordGroupDescription",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('description_text', models.TextField()),
-                ('language', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='phrini_fluent_words.language')),
-                ('word_group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='descriptions', to='phrini_fluent_words.wordgroup')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("description_text", models.TextField()),
+                (
+                    "language",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="phrini_fluent_words.language",
+                    ),
+                ),
+                (
+                    "word_group",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="descriptions",
+                        to="phrini_fluent_words.wordgroup",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='wordgroup',
-            name='languages',
-            field=models.ManyToManyField(through='phrini_fluent_words.WordGroupDescription', to='phrini_fluent_words.language'),
+            model_name="wordgroup",
+            name="languages",
+            field=models.ManyToManyField(
+                through="phrini_fluent_words.WordGroupDescription",
+                to="phrini_fluent_words.language",
+            ),
         ),
         migrations.AddField(
-            model_name='wordgroup',
-            name='owner',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='owned_word_groups', to=settings.AUTH_USER_MODEL),
+            model_name="wordgroup",
+            name="owner",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="owned_word_groups",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.CreateModel(
-            name='WordDescription',
+            name="WordDescription",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('description_text', models.TextField()),
-                ('language', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='phrini_fluent_words.language')),
-                ('word', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='descriptions', to='phrini_fluent_words.word')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("description_text", models.TextField()),
+                (
+                    "language",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="phrini_fluent_words.language",
+                    ),
+                ),
+                (
+                    "word",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="descriptions",
+                        to="phrini_fluent_words.word",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='word',
-            name='word_group',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='words', to='phrini_fluent_words.wordgroup'),
+            model_name="word",
+            name="word_group",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="words",
+                to="phrini_fluent_words.wordgroup",
+            ),
         ),
     ]

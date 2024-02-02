@@ -5,7 +5,7 @@ from .models import Language, WordGroup, WordGroupDescription, Word, WordDescrip
 class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Language
-        fields = ['language_name']
+        fields = ["language_name"]
 
 
 class WordGroupDescriptionSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class WordGroupDescriptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WordGroupDescription
-        fields = ['description_text', 'language']
+        fields = ["description_text", "language"]
 
 
 class WordGroupSerializer(serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class WordGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WordGroup
-        fields = ['id', 'name', 'descriptions']
+        fields = ["id", "name", "descriptions"]
 
 
 class WordDescriptionSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class WordDescriptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WordDescription
-        fields = ['description_text', 'language']
+        fields = ["description_text", "language"]
 
 
 class WordSerializer(serializers.ModelSerializer):
@@ -37,4 +37,4 @@ class WordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Word
-        fields = ['id', 'text', 'descriptions']
+        fields = ["id", "text", "descriptions"]
