@@ -16,5 +16,5 @@ spec:
                   number: 8000
   tls:
     - hosts:
-      - api.phrinifluent.com
+        - api.phrinifluent.com
       secretName: phrinifluent-tls-secrets
