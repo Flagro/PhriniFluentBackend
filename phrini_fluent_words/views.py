@@ -11,37 +11,35 @@ from .serializers import WordGroupSerializer, WordSerializer
 
 # Helper function to get the language or default
 def get_language_or_default(request):
-    default_language_code = getattr(settings, 'DESCRIPTIONS_LANGUAGE', 'english')
-    language_name = request.query_params.get('language', default_language_code)
+    default_language_code = getattr(settings, "DESCRIPTIONS_LANGUAGE", "english")
+    language_name = request.query_params.get("language", default_language_code)
     language, _ = Language.objects.get_or_create(language_name=language_name)
     return language
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([AllowAny])
 def public_word_group_list(request):
     language = get_language_or_default(request)
     word_groups = WordGroup.objects.filter(
-        is_global=True,
-        descriptions__language=language
+        is_global=True, descriptions__language=language
     ).distinct()
     serializer = WordGroupSerializer(word_groups, many=True)
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([IsAuthenticated, IsOwner])
 def private_word_group_list(request):
     language = get_language_or_default(request)
     word_groups = WordGroup.objects.filter(
-        owner=request.user,
-        descriptions__language=language
+        owner=request.user, descriptions__language=language
     ).distinct()
     serializer = WordGroupSerializer(word_groups, many=True)
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([AllowAny])
 def random_word_from_group(request, group_id):
     word_group = get_object_or_404(WordGroup, id=group_id)
@@ -51,17 +49,21 @@ def random_word_from_group(request, group_id):
         if random_word:
             serializer = WordSerializer(random_word)
             return Response(serializer.data)
-        return Response({'error': 'No words in the group'}, status=404)
-    return Response({'error': 'You do not have permission to view this group'}, status=403)
+        return Response({"error": "No words in the group"}, status=404)
+    return Response(
+        {"error": "You do not have permission to view this group"}, status=403
+    )
 
 
-@api_view(['POST'])
+@api_view(["POST"])
 @permission_classes([AllowAny])
 def word_similarity(request, word_id):
     word = get_object_or_404(Word, id=word_id)
     answer_text = word.text
-    input_text = request.data.get('text', '')
+    input_text = request.data.get("text", "")
     # Here you will implement your similarity logic.
     # For now, let's just return a dummy similarity score.
-    similarity_score = 100 if answer_text.lower().strip() == input_text.lower().strip() else 0
-    return Response({'similarity': similarity_score})
+    similarity_score = (
+        100 if answer_text.lower().strip() == input_text.lower().strip() else 0
+    )
+    return Response({"similarity": similarity_score})

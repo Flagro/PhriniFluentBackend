@@ -10,4 +10,6 @@ class PhriniFluentUser(AbstractUser):
     # is_staff
     # is_active
     # date_joined
-    telegram_handle = models.CharField(max_length=100, unique=True, null=True, blank=True)
+    telegram_handle = models.CharField(
+        max_length=100, unique=True, null=True, blank=True
+    )
