@@ -35,7 +35,7 @@ jobs:
     
     - name: Lint with pylint
       run: |
-        pylint .
+        find . -type f -name "*.py" | xargs pylint
 
     - name: Lint YAML files
       run: |
