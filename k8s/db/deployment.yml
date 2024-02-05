@@ -19,9 +19,9 @@ spec:
             - containerPort: 5432
           envFrom:
             - secretRef:
-              name: phrinifluent-db-secrets
+                name: phrinifluent-db-secrets
             - configMapRef:
-              name: phrinifluent-db-config
+                name: phrinifluent-db-config
           volumeMounts:
             - name: phrinifluent-db-storage
               mountPath: /var/lib/postgresql/data
