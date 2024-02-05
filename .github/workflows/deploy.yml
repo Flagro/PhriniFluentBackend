@@ -14,6 +14,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Fetch tags
+        run: git fetch --depth=1 --tags
+
+      - name: Get latest tag or set default
+        id: latest_tag
+        run: |
+          TAG=$(git tag -l --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
+          if [ -z "$TAG" ]; then
+            TAG="latest"
+          fi
+          echo "::set-output name=tag::$TAG"
+
       - name: Configure kubectl
         uses: azure/k8s-set-context@v1
         with:
@@ -50,7 +62,7 @@ jobs:
 
       - name: Update image tags in Kubernetes manifests
         run: |
-          TAG="${{ github.event.release.tag_name }}"
+          TAG="${{ steps.latest_tag.outputs.tag }}"
           sed -i "s|flagro/phrinifluent_web:latest|flagro/phrinifluent_web:$TAG|g" ./k8s/web/deployment.yaml
 
       - name: Deploy to Kubernetes
