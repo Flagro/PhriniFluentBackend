@@ -36,7 +36,10 @@ jobs:
       - name: Get latest tag or set default
         id: latest_tag
         run: |
-          TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "0.0.0")
+          TAG=$(git tag -l "v*" --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
+          if [ -z "$TAG" ]; then
+            TAG="0.0.0"
+          fi
           echo "::set-output name=tag::$TAG"
 
       - name: Create dummy package.json
