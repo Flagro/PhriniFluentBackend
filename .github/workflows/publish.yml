@@ -3,7 +3,6 @@ name: Publish Docker image
 on:
   release:
     types: [published]
-  workflow_dispatch:
 
 jobs:
   push_to_registries:
@@ -36,6 +35,9 @@ jobs:
           images: |
             flagro/phrinifluent_web
             ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=tag
+            type=semver,pattern={{version}}
 
       - name: Build and push Docker images
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
