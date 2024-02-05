@@ -4,9 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       releaseType:
-        description: 'Release Type (MAJOR, MINOR, PATCH)'
+        description: 'Release Type'
         required: true
-        default: 'PATCH'
+        default: 'patch'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
       draft:
         description: 'Create a draft release'
         required: false
