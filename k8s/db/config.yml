@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: phrinifluent-db-config
 data:
-  DB_NAME: "postgres"
-  DB_HOST: "phrinifluent-db"
-  DB_PORT: "5432"
+  POSTGRES_NAME: "postgres"
+  POSTGRES_HOST: "phrinifluent-db"
+  POSTGRES_PORT: "5432"
