@@ -4,5 +4,5 @@ metadata:
   name: phrinifluent-db-config
 data:
   POSTGRES_NAME: "postgres"
-  POSTGRES_HOST: "phrinifluent-db"
+  POSTGRES_HOST: "phrinifluent-db-service"
   POSTGRES_PORT: "5432"
