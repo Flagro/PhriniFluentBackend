@@ -12,6 +12,52 @@ spec:
       labels:
         app: phrinifluent-backend
     spec:
+      initContainers:
+        - name: phrinifluent-backend-migration
+          image: ghcr.io/flagro/phrinifluentbackend:latest
+          command: ["python", "manage.py", "migrate"]
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: phrinifluent-backend-secrets
+            - secretRef:
+                name: phrinifluent-db-secrets
+            - configMapRef:
+                name: phrinifluent-backend-config
+            - configMapRef:
+                name: phrinifluent-db-config
+
+        - name: phrinifluent-backend-admin-creation
+          image: ghcr.io/flagro/phrinifluentbackend:latest
+          command: ["python", "manage.py", "createadmin"]
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: phrinifluent-backend-secrets
+            - secretRef:
+                name: phrinifluent-db-secrets
+            - configMapRef:
+                name: phrinifluent-backend-config
+            - configMapRef:
+                name: phrinifluent-db-config
+
+        - name: phrinifluent-backend-static-collection
+          image: ghcr.io/flagro/phrinifluentbackend:latest
+          command: ["python", "manage.py", "collectstatic", "--noinput"]
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: phrinifluent-backend-secrets
+            - secretRef:
+                name: phrinifluent-db-secrets
+            - configMapRef:
+                name: phrinifluent-backend-config
+            - configMapRef:
+                name: phrinifluent-db-config
+
       containers:
         - name: phrinifluent-backend
           image: ghcr.io/flagro/phrinifluentbackend:latest
