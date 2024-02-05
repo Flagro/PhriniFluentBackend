@@ -55,8 +55,8 @@ jobs:
             --from-literal=SSL_CERTIFICATE="$SSL_CERTIFICATE" \
             --from-literal=SSL_KEY="$SSL_KEY" \
             -o yaml --dry-run=client | kubectl apply -f -
-          echo "$SSL_CERTIFICATE" | base64 --decode > cert.pem
-          echo "$SSL_KEY" | base64 --decode > key.pem
+          echo "$SSL_CERTIFICATE" > cert.pem
+          echo "$SSL_KEY" > key.pem
           kubectl create secret tls phrinifluent-tls-secrets \
             --cert=cert.pem \
             --key=key.pem \
