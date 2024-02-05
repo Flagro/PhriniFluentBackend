@@ -31,7 +31,7 @@ jobs:
           node-version: '14'
 
       - name: Fetch tags
-        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        run: git fetch --depth=1 --tags
 
       - name: Get latest tag or set default
         id: latest_tag
