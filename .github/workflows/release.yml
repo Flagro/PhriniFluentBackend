@@ -7,6 +7,16 @@ on:
         description: 'Release Type (MAJOR, MINOR, PATCH)'
         required: true
         default: 'PATCH'
+      draft:
+        description: 'Create a draft release'
+        required: false
+        default: false
+        type: boolean
+      prerelease:
+        description: 'Mark release as a prerelease'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   release:
@@ -57,5 +67,5 @@ jobs:
       with:
         tag_name: v${{ steps.next_version.outputs.version }}
         release_name: Release v${{ steps.next_version.outputs.version }}
-        draft: false
-        prerelease: false
+        draft: ${{ github.event.inputs.draft }}
+        prerelease: ${{ github.event.inputs.prerelease }}
