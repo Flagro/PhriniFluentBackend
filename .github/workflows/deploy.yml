@@ -51,7 +51,7 @@ jobs:
       - name: Update image tags in Kubernetes manifests
         run: |
           TAG="${{ github.event.release.tag_name }}"
-          sed -i "s|flagro/phrinifluent_web:main|flagro/phrinifluent_web:$TAG|g" ./k8s/web/deployment.yaml
+          sed -i "s|flagro/phrinifluent_web:latest|flagro/phrinifluent_web:$TAG|g" ./k8s/web/deployment.yaml
 
       - name: Deploy to Kubernetes
         run: |

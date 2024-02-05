@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: phrinifluent-backend
-          image: ghcr.io/flagro/phrinifluentbackend:main
+          image: ghcr.io/flagro/phrinifluentbackend:latest
           ports:
             - containerPort: 8000
           envFrom:
