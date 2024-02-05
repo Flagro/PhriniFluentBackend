@@ -22,50 +22,50 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '14'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
 
-    - name: Fetch tags
-      run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+      - name: Fetch tags
+        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
-    - name: Get latest tag or set default
-      id: latest_tag
-      run: |
-        TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "0.0.0")
-        echo "::set-output name=tag::$TAG"
+      - name: Get latest tag or set default
+        id: latest_tag
+        run: |
+          TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "0.0.0")
+          echo "::set-output name=tag::$TAG"
 
-    - name: Create dummy package.json
-      run: |
-        echo "{\"version\": \"${{ steps.latest_tag.outputs.tag }}\"}" > package.json
+      - name: Create dummy package.json
+        run: |
+          echo "{\"version\": \"${{ steps.latest_tag.outputs.tag }}\"}" > package.json
 
-    - name: Calculate next version
-      id: next_version
-      run: |
-        npm --no-git-tag-version version ${{ github.event.inputs.releaseType }}
-        NEXT_VERSION=$(node -p "require('./package.json').version")
-        echo "Next version: $NEXT_VERSION"
-        echo "::set-output name=version::$NEXT_VERSION"
+      - name: Calculate next version
+        id: next_version
+        run: |
+          npm --no-git-tag-version version ${{ github.event.inputs.releaseType }}
+          NEXT_VERSION=$(node -p "require('./package.json').version")
+          echo "Next version: $NEXT_VERSION"
+          echo "::set-output name=version::$NEXT_VERSION"
 
-    - name: Create Git tag
-      run: git tag v${{ steps.next_version.outputs.version }}
+      - name: Create Git tag
+        run: git tag v${{ steps.next_version.outputs.version }}
 
-    - name: Push Git tag
-      run: |
-        git config --global user.name 'Anton Potapov'
-        git config --global user.email '47938145+Flagro@users.noreply.github.com.'
-        git push origin v${{ steps.next_version.outputs.version }}
+      - name: Push Git tag
+        run: |
+          git config --global user.name 'Anton Potapov'
+          git config --global user.email '47938145+Flagro@users.noreply.github.com.'
+          git push origin v${{ steps.next_version.outputs.version }}
 
-    - name: Create Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ steps.next_version.outputs.version }}
-        release_name: Release v${{ steps.next_version.outputs.version }}
-        draft: ${{ github.event.inputs.draft }}
-        prerelease: ${{ github.event.inputs.prerelease }}
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.next_version.outputs.version }}
+          release_name: Release v${{ steps.next_version.outputs.version }}
+          draft: ${{ github.event.inputs.draft }}
+          prerelease: ${{ github.event.inputs.prerelease }}
