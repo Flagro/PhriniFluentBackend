@@ -45,6 +45,7 @@ jobs:
       - name: Create dummy package.json
         run: |
           echo "{\"version\": \"${{ steps.latest_tag.outputs.tag }}\"}" > package.json
+          cat package.json
 
       - name: Calculate next version
         id: next_version
