@@ -41,7 +41,7 @@ jobs:
       - name: Get latest tag or set default
         id: latest_tag
         run: |
-          TAG=$(git tag -l "v*" --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
+          TAG=$(git tag -l --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
           if [ -z "$TAG" ]; then
             TAG="0.0.0"
           fi
@@ -61,20 +61,20 @@ jobs:
           echo "::set-output name=version::$NEXT_VERSION"
 
       - name: Create Git tag
-        run: git tag v${{ steps.next_version.outputs.version }}
+        run: git tag ${{ steps.next_version.outputs.version }}
 
       - name: Push Git tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git push origin v${{ steps.next_version.outputs.version }}
+          git push origin ${{ steps.next_version.outputs.version }}
 
       - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.next_version.outputs.version }}
+          tag_name: ${{ steps.next_version.outputs.version }}
           release_name: Release v${{ steps.next_version.outputs.version }}
           draft: ${{ github.event.inputs.draft }}
           prerelease: ${{ github.event.inputs.prerelease }}
