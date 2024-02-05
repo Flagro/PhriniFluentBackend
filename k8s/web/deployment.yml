@@ -19,10 +19,10 @@ spec:
             - containerPort: 8000
           envFrom:
             - secretRef:
-              name: phrinifluent-backend-secrets
+                name: phrinifluent-backend-secrets
             - secretRef:
-              name: phrinifluent-db-secrets
+                name: phrinifluent-db-secrets
             - configMapRef:
-              name: phrinifluent-backend-config
+                name: phrinifluent-backend-config
             - configMapRef:
-              name: phrinifluent-db-config
+                name: phrinifluent-db-config
