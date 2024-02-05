@@ -66,6 +66,9 @@ jobs:
         run: |
           TAG="${{ steps.latest_tag.outputs.tag }}"
           sed -i "s|flagro/phrinifluent_web:latest|flagro/phrinifluent_web:$TAG|g" ./k8s/web/deployment.yml
+          sed -i "s|flagro/phrinifluent_web:latest|flagro/phrinifluent_web:$TAG|g" ./k8s/jobs/collectstatic.yml
+          sed -i "s|flagro/phrinifluent_web:latest|flagro/phrinifluent_web:$TAG|g" ./k8s/jobs/createadmin.yml
+          sed -i "s|flagro/phrinifluent_web:latest|flagro/phrinifluent_web:$TAG|g" ./k8s/jobs/migrate.yml
 
       - name: Deploy to Kubernetes
         run: |

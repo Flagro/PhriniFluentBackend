@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: phrinifluent-createadmin
-          image: ghcr.io/flagro/phrinifluentbackend:main
+          image: ghcr.io/flagro/phrinifluentbackend:latest
           command: ["python", "manage.py", "createadmin"]
           envFrom:
             - secretRef:
