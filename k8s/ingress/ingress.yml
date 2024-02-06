@@ -13,7 +13,7 @@ spec:
               service:
                 name: phrinifluent-backend-service
                 port:
-                  number: 8000
+                  number: 80
   tls:
     - hosts:
         - api.phrinifluent.com
