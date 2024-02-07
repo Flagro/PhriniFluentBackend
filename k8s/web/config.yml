@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: phrinifluent-backend-config
 data:
-  ENVIRONMENT: "development"
+  ENVIRONMENT: "production"
