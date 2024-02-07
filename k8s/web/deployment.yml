@@ -12,6 +12,10 @@ spec:
       labels:
         app: phrinifluent-backend
     spec:
+      volumes:
+        - name: phrinifluent-static-storage
+          persistentVolumeClaim:
+            claimName: phrinifluent-static-pvc
       initContainers:
         - name: phrinifluent-backend-setup
           image: ghcr.io/flagro/phrinifluentbackend:latest
@@ -30,6 +34,9 @@ spec:
                 name: phrinifluent-backend-config
             - configMapRef:
                 name: phrinifluent-db-config
+          volumeMounts:
+            - name: phrinifluent-static-storage
+              mountPath: /app/staticfiles/
 
       containers:
         - name: phrinifluent-backend

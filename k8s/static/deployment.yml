@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: phrinifluent-static-storage
+              mountPath: /usr/share/nginx/html/static
+            - name: phrinifluent-nginx-config-storage
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+      volumes:
+        - name: phrinifluent-static-storage
+          persistentVolumeClaim:
+            claimName: phrinifluent-static-pvc
+        - name: phrinifluent-nginx-config-storage
+          configMap:
+            name: phrinifluent-nginx-config
