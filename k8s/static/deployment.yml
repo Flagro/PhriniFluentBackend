@@ -21,8 +21,8 @@ spec:
             - name: phrinifluent-static-storage
               mountPath: /usr/share/nginx/html/static
             - name: phrinifluent-nginx-config-storage
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
+              mountPath: /etc/nginx/conf.d
+              readOnly: true
       volumes:
         - name: phrinifluent-static-storage
           persistentVolumeClaim:
