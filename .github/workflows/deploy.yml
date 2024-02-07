@@ -72,3 +72,4 @@ jobs:
           kubectl apply -f ./k8s/db/
           kubectl apply -f ./k8s/ingress/
           kubectl apply -f ./k8s/web/
+          kubectl apply -f ./k8s/static/
