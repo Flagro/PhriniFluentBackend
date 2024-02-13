@@ -1,54 +1,68 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: phrinifluent-backend-deployment
+  name: {{ include "flatchart.fullname" . }}-backend-deployment
+  labels:
+  {{- include "flatchart.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.backendDeployment.replicas }}
   selector:
     matchLabels:
       app: phrinifluent-backend
+    {{- include "flatchart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
         app: phrinifluent-backend
+      {{- include "flatchart.selectorLabels" . | nindent 8 }}
     spec:
-      volumes:
-        - name: phrinifluent-static-storage
-          persistentVolumeClaim:
-            claimName: phrinifluent-static-pvc
-      initContainers:
-        - name: phrinifluent-backend-setup
-          image: ghcr.io/flagro/phrinifluentbackend:latest
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              python manage.py migrate &&
-              python manage.py createadmin &&
-              python manage.py collectstatic --noinput
-          envFrom:
-            - secretRef:
-                name: phrinifluent-backend-secrets
-            - secretRef:
-                name: phrinifluent-db-secrets
-            - configMapRef:
-                name: phrinifluent-backend-config
-            - configMapRef:
-                name: phrinifluent-db-config
-          volumeMounts:
-            - name: phrinifluent-static-storage
-              mountPath: /app/staticfiles/
-
       containers:
-        - name: phrinifluent-backend
-          image: ghcr.io/flagro/phrinifluentbackend:latest
-          ports:
-            - containerPort: 8000
-          envFrom:
-            - secretRef:
-                name: phrinifluent-backend-secrets
-            - secretRef:
-                name: phrinifluent-db-secrets
-            - configMapRef:
-                name: phrinifluent-backend-config
-            - configMapRef:
-                name: phrinifluent-db-config
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        envFrom:
+        - secretRef:
+            name: phrinifluent-backend-secrets
+        - secretRef:
+            name: phrinifluent-db-secrets
+        - configMapRef:
+            name: {{ include "flatchart.fullname" . }}-backend-config
+        - configMapRef:
+            name: {{ include "flatchart.fullname" . }}-db-config
+        image: {{ .Values.backendDeployment.phrinifluentBackend.image.repository }}:{{
+          .Values.backendDeployment.phrinifluentBackend.image.tag | default .Chart.AppVersion
+          }}
+        name: phrinifluent-backend
+        ports:
+        - containerPort: 8000
+        resources: {}
+      initContainers:
+      - args: {{- toYaml .Values.backendDeployment.phrinifluentBackendSetup.args | nindent
+          8 }}
+        command:
+        - /bin/sh
+        - -c
+        env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        envFrom:
+        - secretRef:
+            name: phrinifluent-backend-secrets
+        - secretRef:
+            name: phrinifluent-db-secrets
+        - configMapRef:
+            name: {{ include "flatchart.fullname" . }}-backend-config
+        - configMapRef:
+            name: {{ include "flatchart.fullname" . }}-db-config
+        image: {{ .Values.backendDeployment.phrinifluentBackendSetup.image.repository }}:{{
+          .Values.backendDeployment.phrinifluentBackendSetup.image.tag | default .Chart.AppVersion
+          }}
+        name: phrinifluent-backend-setup
+        resources: {}
+        volumeMounts:
+        - mountPath: /app/staticfiles/
+          name: phrinifluent-static-storage
+      volumes:
+      - name: phrinifluent-static-storage
+        persistentVolumeClaim:
+          claimName: {{ include "flatchart.fullname" . }}-static-pvc

@@ -1,31 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: phrinifluent-db-deployment
+  name: {{ include "flatchart.fullname" . }}-db-deployment
+  labels:
+  {{- include "flatchart.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.dbDeployment.replicas }}
   selector:
     matchLabels:
       app: phrinifluent-db
+    {{- include "flatchart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
         app: phrinifluent-db
+      {{- include "flatchart.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - name: phrinifluent-db
-          image: postgres:latest
-          ports:
-            - containerPort: 5432
-          envFrom:
-            - secretRef:
-                name: phrinifluent-db-secrets
-            - configMapRef:
-                name: phrinifluent-db-config
-          volumeMounts:
-            - name: phrinifluent-db-storage
-              mountPath: /var/lib/postgresql/data
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        envFrom:
+        - secretRef:
+            name: phrinifluent-db-secrets
+        - configMapRef:
+            name: {{ include "flatchart.fullname" . }}-db-config
+        image: {{ .Values.dbDeployment.phrinifluentDb.image.repository }}:{{ .Values.dbDeployment.phrinifluentDb.image.tag
+          | default .Chart.AppVersion }}
+        name: phrinifluent-db
+        ports:
+        - containerPort: 5432
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: phrinifluent-db-storage
       volumes:
-        - name: phrinifluent-db-storage
-          persistentVolumeClaim:
-            claimName: phrinifluent-db-pvc
+      - name: phrinifluent-db-storage
+        persistentVolumeClaim:
+          claimName: {{ include "flatchart.fullname" . }}-db-pvc

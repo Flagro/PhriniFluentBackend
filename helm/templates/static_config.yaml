@@ -1,14 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: phrinifluent-nginx-config
+  name: {{ include "flatchart.fullname" . }}-nginx-config
+  labels:
+  {{- include "flatchart.labels" . | nindent 4 }}
 data:
-  default.conf: |
-    server {
-      listen 80;
-      server_name _;
-
-      location /static {
-        alias /usr/share/nginx/html/static;
-      }
-    }
+  default.conf: {{ .Values.nginxConfig.defaultConf | toYaml | indent 1 }}

@@ -1,11 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: phrinifluent-db-service
+  name: {{ include "flatchart.fullname" . }}-db-service
+  labels:
+  {{- include "flatchart.labels" . | nindent 4 }}
 spec:
+  type: {{ .Values.dbService.type }}
   selector:
     app: phrinifluent-db
+  {{- include "flatchart.selectorLabels" . | nindent 4 }}
   ports:
-    - protocol: TCP
-      port: 5432
-      targetPort: 5432
+	{{- .Values.dbService.ports | toYaml | nindent 2 -}}
