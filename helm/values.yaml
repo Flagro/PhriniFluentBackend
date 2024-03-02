@@ -57,9 +57,11 @@ pv:
   dbPv:
     storageRequest: 5Gi
     accessModes: ReadWriteOnce
+    hostPath: /var/lib/docker/volumes/phrinifluent-db-pv/_data
   staticPv:
     storageRequest: 2Gi
     accessModes: ReadWriteMany
+    hostPath: /var/lib/docker/volumes/phrinifluent-static-pv/_data
 pvc:
   dbPvc:
     storageClass: standard

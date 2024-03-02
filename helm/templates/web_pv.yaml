@@ -6,10 +6,10 @@ metadata:
     {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   capacity:
-    storage: {{ .Values.pvc.staticPvc.storageClass }}
+    storage: {{ .Values.pv.staticPv.storageRequest }}
   accessModes:
-    - {{ .Values.pvc.staticPvc.accessModes }}
+    - {{ .Values.pv.staticPv.accessModes }}
   persistentVolumeReclaimPolicy: Retain
   storageClassName: standard
   hostPath:
-    path: "/var/lib/docker/volumes/phrinifluent-static-pv/_data"
+    path: {{ .Values.pv.staticPv.hostPath | quote }}
