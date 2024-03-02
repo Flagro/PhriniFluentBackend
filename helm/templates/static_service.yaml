@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: {{ include "flatchart.fullname" . }}-static-service
   labels:
-  {{- include "flatchart.labels" . | nindent 4 }}
+    {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.staticService.type }}
   selector:
     app: nginx
-  {{- include "flatchart.selectorLabels" . | nindent 4 }}
+    {{- include "flatchart.selectorLabels" . | nindent 4 }}
   ports:
-	{{- .Values.staticService.ports | toYaml | nindent 2 -}}
+	  {{- .Values.staticService.ports | toYaml | nindent 2 -}}
