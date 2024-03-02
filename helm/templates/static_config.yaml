@@ -5,4 +5,12 @@ metadata:
   labels:
     {{- include "flatchart.labels" . | nindent 4 }}
 data:
-  default.conf: {{ .Values.nginxConfig.defaultConf | toYaml | indent 1 }}
+  default.conf: |
+    server {
+      listen 80;
+      server_name _;
+
+      location /static {
+        alias /usr/share/nginx/html/static;
+      }
+    }

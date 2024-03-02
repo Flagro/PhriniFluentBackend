@@ -36,15 +36,6 @@ dbService:
     targetPort: 5432
   type: ClusterIP
 kubernetesClusterDomain: cluster.local
-nginxConfig:
-  defaultConf: |-
-    server {
-      listen 80;
-      server_name _;
-      location /static {
-        alias /usr/share/nginx/html/static;
-      }
-    }
 nginxDeployment:
   nginx:
     image:
