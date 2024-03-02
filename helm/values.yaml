@@ -75,7 +75,7 @@ pvc:
     storageRequest: 2Gi
 staticService:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+    - port: 80
+      protocol: TCP
+      targetPort: 80
   type: ClusterIP
