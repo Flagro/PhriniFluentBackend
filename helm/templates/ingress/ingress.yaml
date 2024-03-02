@@ -26,4 +26,4 @@ spec:
   tls:
     - hosts:
         - {{ .Values.ingress.host }}
-      secretName: phrinifluent-tls-secrets
+      secretName: {{ include "flatchart.fullname" . }}-tls-secrets

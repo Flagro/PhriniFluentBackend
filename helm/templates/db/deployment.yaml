@@ -23,7 +23,7 @@ spec:
             - containerPort: 5432
           envFrom:
             - secretRef:
-                name: phrinifluent-db-secrets
+                name: {{ include "flatchart.fullname" . }}-db-secrets
             - configMapRef:
                 name: {{ include "flatchart.fullname" . }}-db-config
           - env:

@@ -27,9 +27,9 @@ spec:
           args: {{- toYaml .Values.backendDeployment.phrinifluentBackendSetup.args | nindent 8 }}          
           envFrom:
             - secretRef:
-                name: phrinifluent-backend-secrets
+                name: {{ include "flatchart.fullname" . }}-backend-secrets
             - secretRef:
-                name: phrinifluent-db-secrets
+                name: {{ include "flatchart.fullname" . }}-db-secrets
             - configMapRef:
                 name: {{ include "flatchart.fullname" . }}-backend-config
             - configMapRef:
@@ -48,9 +48,9 @@ spec:
             - containerPort: 8000
           envFrom:
             - secretRef:
-                name: phrinifluent-backend-secrets
+                name: {{ include "flatchart.fullname" . }}-backend-secrets
             - secretRef:
-                name: phrinifluent-db-secrets
+                name: {{ include "flatchart.fullname" . }}-db-secrets
             - configMapRef:
                 name: {{ include "flatchart.fullname" . }}-backend-config
             - configMapRef:
