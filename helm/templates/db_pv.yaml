@@ -8,8 +8,8 @@ spec:
   capacity:
     storage: {{ .Values.pv.dbPv.storageRequest }}
   accessModes:
-    - {{ .Values.pv.dbPv.accessModes }}
-  persistentVolumeReclaimPolicy: {{ .Values.pv.dbPv.reclaimPolicy }}
-  storageClassName: {{ .Values.pv.dbPv.storageClass }}
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
   hostPath:
     path: {{ .Values.pv.dbPv.hostPath | quote }}

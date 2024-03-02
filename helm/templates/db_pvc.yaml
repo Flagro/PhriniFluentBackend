@@ -10,4 +10,4 @@ spec:
   resources:
     requests:
       storage: {{ .Values.pvc.dbPvc.storageRequest | quote }}
-  storageClassName: {{ .Values.pvc.dbPvc.storageClass | quote }}
+  storageClassName: standard
