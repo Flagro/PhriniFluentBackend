@@ -3,13 +3,13 @@ kind: PersistentVolume
 metadata:
   name: {{ include "flatchart.fullname" . }}-static-pv
   labels:
-  {{- include "flatchart.labels" . | nindent 4 }}
+    {{- include "flatchart.labels" . | nindent 4 }}
 spec:
-  accessModes:
-  - ReadWriteMany
   capacity:
     storage: 2Gi
-  hostPath:
-    path: /var/lib/docker/volumes/phrinifluent-static-pv/_data
+  accessModes:
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: standard
+  hostPath:
+    path: /var/lib/docker/volumes/phrinifluent-static-pv/_data
