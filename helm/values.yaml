@@ -56,10 +56,14 @@ nginxDeployment:
 pv:
   dbPv:
     storageRequest: 5Gi
+    storageClass: standard
+    reclaimPolicy: Retain
     accessModes: ReadWriteOnce
     hostPath: /var/lib/docker/volumes/phrinifluent-db-pv/_data
   staticPv:
     storageRequest: 2Gi
+    storageClass: standard
+    reclaimPolicy: Retain
     accessModes: ReadWriteMany
     hostPath: /var/lib/docker/volumes/phrinifluent-static-pv/_data
 pvc:
