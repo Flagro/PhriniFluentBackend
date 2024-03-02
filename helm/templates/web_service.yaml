@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: {{ include "flatchart.fullname" . }}-backend-service
   labels:
-  {{- include "flatchart.labels" . | nindent 4 }}
+    {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.backendService.type }}
   selector:
     app: phrinifluent-backend
-  {{- include "flatchart.selectorLabels" . | nindent 4 }}
+    {{- include "flatchart.selectorLabels" . | nindent 4 }}
   ports:
-	{{- .Values.backendService.ports | toYaml | nindent 2 -}}
+	  {{- .Values.backendService.ports | toYaml | nindent 2 -}}
