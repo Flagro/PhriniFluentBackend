@@ -31,7 +31,7 @@ jobs:
         uses: azure/k8s-set-context@v1
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
-      
+
       - name: Create Namespace (if not exists)
         run: |
           kubectl get ns phrinifluent || kubectl create ns phrinifluent

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phrinifluent-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phrinifluent-db
+  template:
+    metadata:
+      labels:
+        app: phrinifluent-db
+    spec:
+      containers:
+        - name: phrinifluent-db
+          image: postgres
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: phrinifluent-db-secrets
+            - configMapRef:
+                name: phrinifluent-db-config
+          volumeMounts:
+            - name: phrinifluent-db-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: phrinifluent-db-storage
+          persistentVolumeClaim:
+            claimName: phrinifluent-db-pvc
