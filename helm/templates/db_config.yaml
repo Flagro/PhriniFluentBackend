@@ -1,8 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: phrinifluent-db-config
+  name: {{ include "flatchart.fullname" . }}-db-config
+  labels:
+    {{- include "flatchart.labels" . | nindent 4 }}
 data:
   POSTGRES_NAME: "postgres"
-  POSTGRES_HOST: "phrinifluent-db-service"
+  POSTGRES_HOST: "{{ include "flatchart.fullname" . }}-db-service"
   POSTGRES_PORT: "5432"

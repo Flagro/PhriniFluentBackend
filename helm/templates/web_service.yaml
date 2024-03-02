@@ -1,10 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: phrinifluent-backend-service
+  name: {{ include "flatchart.fullname" . }}-backend-service
+  labels:
+    {{- include "flatchart.labels" . | nindent 4 }}
 spec:
+  type: ClusterIP
   selector:
     app: phrinifluent-backend
+    {{- include "flatchart.selectorLabels" . | nindent 4 }}
   ports:
     - protocol: TCP
       port: 80

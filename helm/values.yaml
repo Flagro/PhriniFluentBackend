@@ -7,62 +7,38 @@ backendDeployment:
       tag: latest
   phrinifluentBackendSetup:
     args:
-    - |
-      python manage.py migrate &&
-      python manage.py createadmin &&
-      python manage.py collectstatic --noinput
+      - |
+        python manage.py migrate &&
+        python manage.py createadmin &&
+        python manage.py collectstatic --noinput
     image:
       repository: ghcr.io/flagro/phrinifluentbackend
       tag: latest
   replicas: 1
-backendService:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8000
-  type: ClusterIP
-dbConfig:
-  postgresHost: phrinifluent-db-service
-  postgresName: postgres
-  postgresPort: "5432"
 dbDeployment:
   phrinifluentDb:
     image:
       repository: postgres
       tag: latest
   replicas: 1
-dbService:
-  ports:
-  - port: 5432
-    protocol: TCP
-    targetPort: 5432
-  type: ClusterIP
 kubernetesClusterDomain: cluster.local
-nginxConfig:
-  defaultConf: |-
-    server {
-      listen 80;
-      server_name _;
-      location /static {
-        alias /usr/share/nginx/html/static;
-      }
-    }
 nginxDeployment:
   nginx:
     image:
       repository: nginx
       tag: latest
   replicas: 1
+pv:
+  dbPv:
+    storageRequest: 5Gi
+    hostPath: /var/lib/docker/volumes/phrinifluent-db-pv/_data
+  staticPv:
+    storageRequest: 2Gi
+    hostPath: /var/lib/docker/volumes/phrinifluent-static-pv/_data
 pvc:
   dbPvc:
-    storageClass: standard
     storageRequest: 5Gi
   staticPvc:
-    storageClass: standard
     storageRequest: 2Gi
-staticService:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  type: ClusterIP
+ingress:
+  host: api.phrinifluent.com

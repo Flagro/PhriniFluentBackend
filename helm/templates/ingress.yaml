@@ -1,27 +1,29 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: phrinifluent-ingress
+  name: {{ include "flatchart.fullname" . }}-ingress
+  labels:
+    {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   rules:
-    - host: api.phrinifluent.com
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
           - path: /static
             pathType: Prefix
             backend:
               service:
-                name: phrinifluent-static-service
+                name: '{{ include "flatchart.fullname" . }}-static-service'
                 port:
                   number: 80
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: phrinifluent-backend-service
+                name: '{{ include "flatchart.fullname" . }}-backend-service'
                 port:
                   number: 80
   tls:
     - hosts:
-        - api.phrinifluent.com
+        - {{ .Values.ingress.host }}
       secretName: phrinifluent-tls-secrets
