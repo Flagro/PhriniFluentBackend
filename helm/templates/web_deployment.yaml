@@ -47,14 +47,14 @@ spec:
           ports:
             - containerPort: 8000
           envFrom:
-          - secretRef:
-              name: phrinifluent-backend-secrets
-          - secretRef:
-              name: phrinifluent-db-secrets
-          - configMapRef:
-              name: {{ include "flatchart.fullname" . }}-backend-config
-          - configMapRef:
-              name: {{ include "flatchart.fullname" . }}-db-config
+            - secretRef:
+                name: phrinifluent-backend-secrets
+            - secretRef:
+                name: phrinifluent-db-secrets
+            - configMapRef:
+                name: {{ include "flatchart.fullname" . }}-backend-config
+            - configMapRef:
+                name: {{ include "flatchart.fullname" . }}-db-config
           env:
             - name: KUBERNETES_CLUSTER_DOMAIN
               value: {{ quote .Values.kubernetesClusterDomain }}
