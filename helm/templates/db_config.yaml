@@ -5,6 +5,6 @@ metadata:
   labels:
     {{- include "flatchart.labels" . | nindent 4 }}
 data:
-  POSTGRES_NAME: {{ .Values.dbConfig.postgresName | quote }}
+  POSTGRES_NAME: postgres
   POSTGRES_HOST: {{ .Values.dbConfig.postgresHost | quote }}
-  POSTGRES_PORT: {{ .Values.dbConfig.postgresPort | quote }}
+  POSTGRES_PORT: "5432"
