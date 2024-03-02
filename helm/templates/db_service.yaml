@@ -10,6 +10,6 @@ spec:
     app: phrinifluent-db
     {{- include "flatchart.selectorLabels" . | nindent 4 }}
   ports:
-    - port: 5432
-      protocol: TCP
+    - protocol: TCP
+      port: 5432
       targetPort: 5432

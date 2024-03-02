@@ -10,6 +10,6 @@ spec:
     app: phrinifluent-backend
     {{- include "flatchart.selectorLabels" . | nindent 4 }}
   ports:
-    - port: 80
-      protocol: TCP
+    - protocol: TCP
+      port: 80
       targetPort: 8000
