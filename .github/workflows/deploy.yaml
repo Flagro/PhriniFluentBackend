@@ -32,6 +32,15 @@ jobs:
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+
+      # - name: Add Helm repository
+      #   run: helm repo add myrepo https://mychartrepo.com/charts
+
+      # - name: Update Helm repositories
+      #   run: helm repo update
+
       - name: Create and Apply Kubernetes Secrets
         env:
           DB_USER: ${{ secrets.DB_USER }}
@@ -43,34 +52,13 @@ jobs:
           SSL_CERTIFICATE: ${{ secrets.SSL_CERTIFICATE }}
           SSL_KEY: ${{ secrets.SSL_KEY }}
         run: |
-          kubectl create secret generic phrinifluent-db-secrets \
-            --from-literal=POSTGRES_USER="$DB_USER" \
-            --from-literal=POSTGRES_PASSWORD="$DB_PASSWORD" \
-            --from-literal=POSTGRES_DB="$DB_NAME" \
-            -o yaml --dry-run=client | kubectl apply -f -
-          kubectl create secret generic phrinifluent-backend-secrets \
-            --from-literal=SECRET_KEY="$SECRET_KEY" \
-            --from-literal=ADMIN_USERNAME="$ADMIN_USERNAME" \
-            --from-literal=ADMIN_EMAIL="$ADMIN_EMAIL" \
-            --from-literal=ADMIN_PASSWORD="$ADMIN_PASSWORD" \
-            --from-literal=SSL_CERTIFICATE="$SSL_CERTIFICATE" \
-            --from-literal=SSL_KEY="$SSL_KEY" \
-            -o yaml --dry-run=client | kubectl apply -f -
-          echo "$SSL_CERTIFICATE" > cert.pem
-          echo "$SSL_KEY" > key.pem
-          kubectl create secret tls phrinifluent-tls-secrets \
-            --cert=cert.pem \
-            --key=key.pem \
-            -o yaml --dry-run=client | kubectl apply -f -
-
-      - name: Update image tags in Kubernetes manifests
-        run: |
-          TAG="${{ steps.latest_tag.outputs.tag }}"
-          sed -i "s|flagro/phrinifluent_web:latest|flagro/phrinifluent_web:$TAG|g" ./k8s/web/deployment.yml
-
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f ./k8s/db/
-          kubectl apply -f ./k8s/ingress/
-          kubectl apply -f ./k8s/web/
-          kubectl apply -f ./k8s/static/
+          helm upgrade --install ${{ steps.latest_tag.outputs.tag }} ./helm \
+            --set image.tag=${{ steps.latest_tag.outputs.tag }} \
+            --set dbSecrets.user=${{ secrets.DB_USER }} \
+            --set dbSecrets.password=${{ secrets.DB_PASSWORD }} \
+            --set backendSecrets.secretKey=${{ secrets.SECRET_KEY }} \
+            --set backendSecrets.adminUsername=${{ secrets.ADMIN_USERNAME }} \
+            --set backendSecrets.adminEmail=${{ secrets.ADMIN_EMAIL }} \
+            --set backendSecrets.adminPassword=${{ secrets.ADMIN_PASSWORD }} \
+            --set-file tlsSecrets.certFile=<(echo "${{ secrets.SSL_CERTIFICATE }}") \
+            --set-file tlsSecrets.keyFile=<(echo "${{ secrets.SSL_KEY }}")
