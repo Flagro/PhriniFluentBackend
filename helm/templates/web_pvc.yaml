@@ -3,10 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ include "flatchart.fullname" . }}-static-pvc
   labels:
-  {{- include "flatchart.labels" . | nindent 4 }}
+    {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   resources:
     requests:
       storage: {{ .Values.pvc.staticPvc.storageRequest | quote }}
