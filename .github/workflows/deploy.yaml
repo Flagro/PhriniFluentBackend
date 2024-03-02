@@ -31,6 +31,10 @@ jobs:
         uses: azure/k8s-set-context@v1
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      
+      - name: Create Namespace (if not exists)
+        run: |
+          kubectl get ns phrinifluent || kubectl create ns phrinifluent
 
       - name: Set up Helm
         uses: azure/setup-helm@v1
@@ -53,6 +57,7 @@ jobs:
           SSL_KEY: ${{ secrets.SSL_KEY }}
         run: |
           helm upgrade --install ${{ steps.latest_tag.outputs.tag }} ./helm \
+            --namespace phrinifluent \
             --set image.tag=${{ steps.latest_tag.outputs.tag }} \
             --set dbSecrets.user=${{ secrets.DB_USER }} \
             --set dbSecrets.password=${{ secrets.DB_PASSWORD }} \
