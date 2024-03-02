@@ -7,10 +7,10 @@ backendDeployment:
       tag: latest
   phrinifluentBackendSetup:
     args:
-    - |
-      python manage.py migrate &&
-      python manage.py createadmin &&
-      python manage.py collectstatic --noinput
+      - |
+        python manage.py migrate &&
+        python manage.py createadmin &&
+        python manage.py collectstatic --noinput
     image:
       repository: ghcr.io/flagro/phrinifluentbackend
       tag: latest
