@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: {{ include "flatchart.fullname" . }}-db-service
   labels:
-  {{- include "flatchart.labels" . | nindent 4 }}
+    {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.dbService.type }}
   selector:
     app: phrinifluent-db
-  {{- include "flatchart.selectorLabels" . | nindent 4 }}
+    {{- include "flatchart.selectorLabels" . | nindent 4 }}
   ports:
-	{{- .Values.dbService.ports | toYaml | nindent 2 -}}
+	  {{- .Values.dbService.ports | toYaml | nindent 2 -}}
