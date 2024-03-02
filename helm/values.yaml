@@ -29,12 +29,6 @@ dbDeployment:
       repository: postgres
       tag: latest
   replicas: 1
-dbService:
-  ports:
-  - port: 5432
-    protocol: TCP
-    targetPort: 5432
-  type: ClusterIP
 kubernetesClusterDomain: cluster.local
 nginxDeployment:
   nginx:

@@ -5,9 +5,11 @@ metadata:
   labels:
     {{- include "flatchart.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.dbService.type }}
+  type: ClusterIP
   selector:
     app: phrinifluent-db
     {{- include "flatchart.selectorLabels" . | nindent 4 }}
   ports:
-	  {{- .Values.dbService.ports | toYaml | nindent 2 -}}
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
