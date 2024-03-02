@@ -15,12 +15,6 @@ backendDeployment:
       repository: ghcr.io/flagro/phrinifluentbackend
       tag: latest
   replicas: 1
-backendService:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8000
-  type: ClusterIP
 dbConfig:
   postgresHost: phrinifluent-db-service
 dbDeployment:

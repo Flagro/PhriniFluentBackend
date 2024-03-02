@@ -5,9 +5,11 @@ metadata:
   labels:
     {{- include "flatchart.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.backendService.type }}
+  type: ClusterIP
   selector:
     app: phrinifluent-backend
     {{- include "flatchart.selectorLabels" . | nindent 4 }}
   ports:
-	  {{- .Values.backendService.ports | toYaml | nindent 2 -}}
+    - port: 80
+      protocol: TCP
+      targetPort: 8000
