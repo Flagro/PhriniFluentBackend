@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: {{ include "flatchart.fullname" . }}-backend-config
   labels:
-  {{- include "flatchart.labels" . | nindent 4 }}
+    {{- include "flatchart.labels" . | nindent 4 }}
 data:
   ENVIRONMENT: {{ .Values.backendConfig.environment | quote }}
