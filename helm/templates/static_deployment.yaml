@@ -3,39 +3,38 @@ kind: Deployment
 metadata:
   name: {{ include "flatchart.fullname" . }}-nginx-deployment
   labels:
-  {{- include "flatchart.labels" . | nindent 4 }}
+    {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.nginxDeployment.replicas }}
   selector:
     matchLabels:
       app: nginx
-    {{- include "flatchart.selectorLabels" . | nindent 6 }}
+      {{- include "flatchart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
         app: nginx
-      {{- include "flatchart.selectorLabels" . | nindent 8 }}
+        {{- include "flatchart.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-      - env:
-        - name: KUBERNETES_CLUSTER_DOMAIN
-          value: {{ quote .Values.kubernetesClusterDomain }}
-        image: {{ .Values.nginxDeployment.nginx.image.repository }}:{{ .Values.nginxDeployment.nginx.image.tag
-          | default .Chart.AppVersion }}
-        name: nginx
-        ports:
-        - containerPort: 80
-        resources: {}
-        volumeMounts:
-        - mountPath: /usr/share/nginx/html/static
-          name: phrinifluent-static-storage
-        - mountPath: /etc/nginx/conf.d
-          name: phrinifluent-nginx-config-storage
-          readOnly: true
+        - name: nginx
+          image: {{ .Values.nginxDeployment.nginx.image.repository }}:{{ .Values.nginxDeployment.nginx.image.tag | default .Chart.AppVersion }}
+          ports:
+            - containerPort: 80
+          env:
+            - name: KUBERNETES_CLUSTER_DOMAIN
+              value: {{ quote .Values.kubernetesClusterDomain }}
+          resources: {}
+          volumeMounts:
+            - name: phrinifluent-static-storage
+              mountPath: /usr/share/nginx/html/static
+            - name: phrinifluent-nginx-config-storage
+              mountPath: /etc/nginx/conf.d
+              readOnly: true
       volumes:
-      - name: phrinifluent-static-storage
-        persistentVolumeClaim:
-          claimName: {{ include "flatchart.fullname" . }}-static-pvc
-      - configMap:
-          name: {{ include "flatchart.fullname" . }}-nginx-config
-        name: phrinifluent-nginx-config-storage
+        - name: phrinifluent-static-storage
+          persistentVolumeClaim:
+            claimName: {{ include "flatchart.fullname" . }}-static-pvc
+        - name: phrinifluent-nginx-config-storage
+          configMap:
+            name: {{ include "flatchart.fullname" . }}-nginx-config
