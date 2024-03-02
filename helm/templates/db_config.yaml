@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "flatchart.fullname" . }}-db-config
   labels:
-  {{- include "flatchart.labels" . | nindent 4 }}
+    {{- include "flatchart.labels" . | nindent 4 }}
 data:
   POSTGRES_NAME: {{ .Values.dbConfig.postgresName | quote }}
   POSTGRES_HOST: {{ .Values.dbConfig.postgresHost | quote }}
