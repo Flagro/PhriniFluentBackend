@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
   name: {{ include "flatchart.fullname" . }}-db-deployment
   labels:
-  {{- include "flatchart.labels" . | nindent 4 }}
+    {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.dbDeployment.replicas }}
   selector:
     matchLabels:
       app: phrinifluent-db
-    {{- include "flatchart.selectorLabels" . | nindent 6 }}
+      {{- include "flatchart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
         app: phrinifluent-db
-      {{- include "flatchart.selectorLabels" . | nindent 8 }}
+        {{- include "flatchart.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: phrinifluent-db
