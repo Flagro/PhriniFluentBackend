@@ -9,20 +9,20 @@ spec:
     - host: api.phrinifluent.com
       http:
         paths:
-        - path: /static
-          pathType: Prefix
-          backend:
-            service:
-              name: '{{ include "flatchart.fullname" . }}-static-service'
-              port:
-                number: 80
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: '{{ include "flatchart.fullname" . }}-backend-service'
-              port:
-                number: 80
+          - path: /static
+            pathType: Prefix
+            backend:
+              service:
+                name: '{{ include "flatchart.fullname" . }}-static-service'
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: '{{ include "flatchart.fullname" . }}-backend-service'
+                port:
+                  number: 80
   tls:
     - hosts:
         - api.phrinifluent.com
