@@ -1,4 +1,4 @@
-name: Python Linting
+name: Linting
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  python-lint:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -39,3 +39,10 @@ jobs:
       - name: Lint YAML files
         run: |
           yamllint .
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v1
+
+      - name: Lint Helm Chart
+        run: |
+          helm lint ./helm
