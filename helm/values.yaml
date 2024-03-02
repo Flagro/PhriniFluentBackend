@@ -15,8 +15,6 @@ backendDeployment:
       repository: ghcr.io/flagro/phrinifluentbackend
       tag: latest
   replicas: 1
-dbConfig:
-  postgresHost: phrinifluent-db-service
 dbDeployment:
   phrinifluentDb:
     image:
