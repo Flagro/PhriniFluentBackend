@@ -6,7 +6,7 @@ metadata:
     {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   rules:
-    - host: api.phrinifluent.com
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
           - path: /static
@@ -25,5 +25,5 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - api.phrinifluent.com
+        - {{ .Values.ingress.host }}
       secretName: phrinifluent-tls-secrets

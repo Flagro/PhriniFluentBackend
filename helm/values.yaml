@@ -42,3 +42,5 @@ pvc:
     storageRequest: 5Gi
   staticPvc:
     storageRequest: 2Gi
+ingress:
+  host: api.phrinifluent.com
