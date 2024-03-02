@@ -1,7 +1,7 @@
 extends: default
 
 ignore: |
-  ./helm/templates/*
+  helm/templates/**/*.yaml
 
 rules:
   line-length:
