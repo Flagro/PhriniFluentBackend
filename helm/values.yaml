@@ -1,0 +1,66 @@
+backendConfig:
+  environment: production
+
+kubernetesClusterDomain: cluster.local
+
+ingress:
+  host: api.phrinifluent.com
+
+backendDeployment:
+  phrinifluentBackend:
+    image:
+      repository: ghcr.io/flagro/phrinifluentbackend
+      tag: latest
+  phrinifluentBackendSetup:
+    args:
+      - |
+        python manage.py migrate &&
+        python manage.py createadmin &&
+        python manage.py collectstatic --noinput
+    image:
+      repository: ghcr.io/flagro/phrinifluentbackend
+      tag: latest
+  replicas: 1
+
+dbDeployment:
+  phrinifluentDb:
+    image:
+      repository: postgres
+      tag: latest
+  replicas: 1
+
+nginxDeployment:
+  nginx:
+    image:
+      repository: nginx
+      tag: latest
+  replicas: 1
+
+pv:
+  dbPv:
+    storageRequest: 5Gi
+    hostPath: /var/lib/docker/volumes/phrinifluent-db-pv/_data
+  staticPv:
+    storageRequest: 2Gi
+    hostPath: /var/lib/docker/volumes/phrinifluent-static-pv/_data
+
+pvc:
+  dbPvc:
+    storageRequest: 5Gi
+  staticPvc:
+    storageRequest: 2Gi
+
+dbSecrets:
+  user: ""
+  password: ""
+  dbName: ""
+
+backendSecrets:
+  secretKey: ""
+  adminUsername: ""
+  adminEmail: ""
+  adminPassword: ""
+
+tlsSecrets:
+  certFile: "cert.pem"
+  keyFile: "key.pem"

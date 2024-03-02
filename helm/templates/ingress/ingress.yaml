@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "flatchart.fullname" . }}-ingress
+  labels:
+    {{- include "flatchart.labels" . | nindent 4 }}
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /static
+            pathType: Prefix
+            backend:
+              service:
+                name: '{{ include "flatchart.fullname" . }}-static-service'
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: '{{ include "flatchart.fullname" . }}-backend-service'
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: {{ include "flatchart.fullname" . }}-tls-secrets
