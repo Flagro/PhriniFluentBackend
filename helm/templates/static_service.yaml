@@ -5,9 +5,11 @@ metadata:
   labels:
     {{- include "flatchart.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.staticService.type }}
+  type: ClusterIP
   selector:
     app: nginx
     {{- include "flatchart.selectorLabels" . | nindent 4 }}
   ports:
-	  {{- .Values.staticService.ports | toYaml | nindent 2 -}}
+    - port: 80
+      protocol: TCP
+      targetPort: 80
