@@ -6,9 +6,9 @@ metadata:
     {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   capacity:
-    storage: 5Gi
+    storage: {{ .Values.pv.dbPv.storageRequest }}
   accessModes:
-    - ReadWriteOnce
+    - {{ .Values.pv.dbPv.accessModes }}
   persistentVolumeReclaimPolicy: Retain
   storageClassName: standard
   hostPath:

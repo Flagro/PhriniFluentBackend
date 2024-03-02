@@ -6,9 +6,9 @@ metadata:
     {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   capacity:
-    storage: 2Gi
+    storage: {{ .Values.pvc.staticPvc.storageClass }}
   accessModes:
-    - ReadWriteMany
+    - {{ .Values.pvc.staticPvc.accessModes }}
   persistentVolumeReclaimPolicy: Retain
   storageClassName: standard
   hostPath:

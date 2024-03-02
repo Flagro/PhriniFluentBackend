@@ -53,6 +53,13 @@ nginxDeployment:
       repository: nginx
       tag: latest
   replicas: 1
+pv:
+  dbPv:
+    storageRequest: 5Gi
+    accessModes: ReadWriteOnce
+  staticPv:
+    storageRequest: 2Gi
+    accessModes: ReadWriteMany
 pvc:
   dbPvc:
     storageClass: standard
