@@ -31,8 +31,8 @@ spec:
               value: {{ quote .Values.kubernetesClusterDomain }}
           resources: {}
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: phrinifluent-db-storage
+            - name: phrinifluent-db-storage
+              mountPath: /var/lib/postgresql/data
       volumes:
         - name: phrinifluent-db-storage
           persistentVolumeClaim:
