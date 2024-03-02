@@ -3,27 +3,27 @@ kind: Ingress
 metadata:
   name: {{ include "flatchart.fullname" . }}-ingress
   labels:
-  {{- include "flatchart.labels" . | nindent 4 }}
+    {{- include "flatchart.labels" . | nindent 4 }}
 spec:
   rules:
-  - host: api.phrinifluent.com
-    http:
-      paths:
-      - backend:
-          service:
-            name: '{{ include "flatchart.fullname" . }}-static-service'
-            port:
-              number: 80
-        path: /static
-        pathType: Prefix
-      - backend:
-          service:
-            name: '{{ include "flatchart.fullname" . }}-backend-service'
-            port:
-              number: 80
-        path: /
-        pathType: Prefix
+    - host: api.phrinifluent.com
+      http:
+        paths:
+        - path: /static
+          pathType: Prefix
+          backend:
+            service:
+              name: '{{ include "flatchart.fullname" . }}-static-service'
+              port:
+                number: 80
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: '{{ include "flatchart.fullname" . }}-backend-service'
+              port:
+                number: 80
   tls:
-  - hosts:
-    - api.phrinifluent.com
-    secretName: phrinifluent-tls-secrets
+    - hosts:
+        - api.phrinifluent.com
+      secretName: phrinifluent-tls-secrets
