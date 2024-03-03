@@ -62,5 +62,5 @@ backendSecrets:
   adminPassword: ""
 
 tlsSecrets:
-  cert: ""
+  crt: ""
   key: ""
