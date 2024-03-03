@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: phrinifluent-db
-          image: {{ .Values.dbDeployment.phrinifluentDb.image.repository }}:{{ .Values.dbDeployment.phrinifluentDb.image.tag | default .Chart.AppVersion }}
+          image: {{ .Values.dbDeployment.phrinifluentDb.image.repository }}:{{ .Values.dbDeployment.phrinifluentDb.image.tag }}
           ports:
             - containerPort: 5432
           envFrom:
