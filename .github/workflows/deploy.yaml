@@ -55,7 +55,7 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install ${{ steps.latest_tag.outputs.tag }} ./helm \
+          helm upgrade --install v${{ steps.latest_tag.outputs.tag }} ./helm \
             --namespace phrinifluent \
             --set backendDeployment.phrinifluentBackend.image.tag=${{ steps.latest_tag.outputs.tag }} \
             --set image.tag=${{ steps.latest_tag.outputs.tag }} \
