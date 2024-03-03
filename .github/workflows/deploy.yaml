@@ -53,6 +53,11 @@ jobs:
       # - name: Update Helm repositories
       #   run: helm repo update
 
+      - name: Write TLS Certificates to Files
+        run: |
+          echo "${{ secrets.SSL_CERTIFICATE }}" > ./crt.pem
+          echo "${{ secrets.SSL_KEY }}" > ./key.pem
+
       - name: Deploy with Helm
         run: |
           helm upgrade --install phrinifluent ./helm \
@@ -64,5 +69,5 @@ jobs:
             --set backendSecrets.adminUsername=${{ secrets.ADMIN_USERNAME }} \
             --set backendSecrets.adminEmail=${{ secrets.ADMIN_EMAIL }} \
             --set backendSecrets.adminPassword=${{ secrets.ADMIN_PASSWORD }} \
-            --set-file tlsSecrets.certFile=<(echo "${{ secrets.SSL_CERTIFICATE }}") \
-            --set-file tlsSecrets.keyFile=<(echo "${{ secrets.SSL_KEY }}")
+            --set-file tlsSecrets.certFile=./crt.pem \
+            --set-file tlsSecrets.keyFile=./key.pem
