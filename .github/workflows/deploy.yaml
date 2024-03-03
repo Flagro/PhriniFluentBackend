@@ -47,12 +47,6 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@v4.1.0
 
-      # - name: Add Helm repository
-      #   run: helm repo add myrepo https://mychartrepo.com/charts
-
-      # - name: Update Helm repositories
-      #   run: helm repo update
-
       - name: Write TLS Certificates to Files
         run: |
           echo "${{ secrets.SSL_CERTIFICATE }}" > ./crt.pem
@@ -67,7 +61,6 @@ jobs:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
         run: |
-          helm upgrade --help
           helm upgrade --install phrinifluent ./helm \
             --namespace phrinifluent \
             --set backendDeployment.phrinifluentBackend.image.tag=${{ steps.latest_tag.outputs.tag }} \
