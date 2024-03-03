@@ -69,5 +69,5 @@ jobs:
             --set backendSecrets.adminUsername=${{ secrets.ADMIN_USERNAME }} \
             --set backendSecrets.adminEmail=${{ secrets.ADMIN_EMAIL }} \
             --set backendSecrets.adminPassword=${{ secrets.ADMIN_PASSWORD }} \
-            --set-file tlsSecrets.certFile=./crt.pem \
-            --set-file tlsSecrets.keyFile=./key.pem
+            --set-file tlsSecrets.crt=./crt.pem \
+            --set-file tlsSecrets.key=./key.pem
