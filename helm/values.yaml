@@ -62,5 +62,5 @@ backendSecrets:
   adminPassword: ""
 
 tlsSecrets:
-  certFile: "cert.pem"
-  keyFile: "key.pem"
+  cert: ""
+  key: ""
