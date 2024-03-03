@@ -22,7 +22,7 @@ spec:
             claimName: {{ include "flatchart.fullname" . }}-static-pvc
       initContainers:
         - name: phrinifluent-backend-setup
-          image: {{ .Values.backendDeployment.phrinifluentBackendSetup.image.repository }}:{{ .Values.backendDeployment.phrinifluentBackendSetup.image.tag }}
+          image: {{ .Values.backendDeployment.phrinifluentBackendSetup.image.repository }}:{{ .Values.backendDeployment.phrinifluentBackendSetup.image.tag | default "latest" }}
           command: ["/bin/sh", "-c"]
           args:
             {{- toYaml .Values.backendDeployment.phrinifluentBackendSetup.args | nindent 12 }}
@@ -44,7 +44,7 @@ spec:
               name: phrinifluent-static-storage
       containers:
         - name: phrinifluent-backend
-          image: {{ .Values.backendDeployment.phrinifluentBackend.image.repository }}:{{ .Values.backendDeployment.phrinifluentBackend.image.tag }}
+          image: {{ .Values.backendDeployment.phrinifluentBackend.image.repository }}:{{ .Values.backendDeployment.phrinifluentBackend.image.tag | default "latest" }}
           ports:
             - containerPort: 8000
           envFrom:
