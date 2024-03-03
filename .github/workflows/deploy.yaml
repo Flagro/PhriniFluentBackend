@@ -71,8 +71,8 @@ jobs:
           helm upgrade --install phrinifluent ./helm \
             --namespace phrinifluent \
             --set backendDeployment.phrinifluentBackend.image.tag=${{ steps.latest_tag.outputs.tag }} \
-            --set dbSecrets.user="$DB_USER" \
-            --set dbSecrets.password="$DB_PASSWORD" \
+            --set dbSecrets.dbUser="$DB_USER" \
+            --set dbSecrets.dbPassword="$DB_PASSWORD" \
             --set backendSecrets.secretKey="$SECRET_KEY" \
             --set backendSecrets.adminUsername="$ADMIN_USERNAME" \
             --set backendSecrets.adminEmail="$ADMIN_EMAIL" \

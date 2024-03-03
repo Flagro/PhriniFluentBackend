@@ -51,8 +51,8 @@ pvc:
     storageRequest: 2Gi
 
 dbSecrets:
-  user: ""
-  password: ""
+  dbUser: ""
+  dbPassword: ""
   dbName: ""
 
 backendSecrets:
