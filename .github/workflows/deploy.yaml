@@ -66,8 +66,6 @@ jobs:
           ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          SSL_CERTIFICATE: ${{ secrets.SSL_CERTIFICATE }}
-          SSL_KEY: ${{ secrets.SSL_KEY }}
         run: |
           helm upgrade --install phrinifluent ./helm \
             --namespace phrinifluent \
@@ -78,5 +76,5 @@ jobs:
             --set backendSecrets.adminUsername="$ADMIN_USERNAME" \
             --set backendSecrets.adminEmail="$ADMIN_EMAIL" \
             --set backendSecrets.adminPassword="$ADMIN_PASSWORD" \
-            --set-file tlsSecrets.crt=./crt.pem \
-            --set-file tlsSecrets.key=./key.pem
+            --set-file tlsSecrets.crt="crt.pem" \
+            --set-file tlsSecrets.key="key.pem"
