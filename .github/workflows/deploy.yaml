@@ -59,15 +59,24 @@ jobs:
           echo "${{ secrets.SSL_KEY }}" > ./key.pem
 
       - name: Deploy with Helm
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          SSL_CERTIFICATE: ${{ secrets.SSL_CERTIFICATE }}
+          SSL_KEY: ${{ secrets.SSL_KEY }}
         run: |
           helm upgrade --install phrinifluent ./helm \
             --namespace phrinifluent \
             --set backendDeployment.phrinifluentBackend.image.tag=${{ steps.latest_tag.outputs.tag }} \
-            --set dbSecrets.user="${{ secrets.DB_USER }}" \
-            --set dbSecrets.password="${{ secrets.DB_PASSWORD }}" \
-            --set backendSecrets.secretKey="${{ secrets.SECRET_KEY }}" \
-            --set backendSecrets.adminUsername="${{ secrets.ADMIN_USERNAME }}" \
-            --set backendSecrets.adminEmail="${{ secrets.ADMIN_EMAIL }}" \
-            --set backendSecrets.adminPassword="${{ secrets.ADMIN_PASSWORD }}" \
+            --set dbSecrets.user="$DB_USER" \
+            --set dbSecrets.password="$DB_PASSWORD" \
+            --set backendSecrets.secretKey="$SECRET_KEY" \
+            --set backendSecrets.adminUsername="$ADMIN_USERNAME" \
+            --set backendSecrets.adminEmail="$ADMIN_EMAIL" \
+            --set backendSecrets.adminPassword="$ADMIN_PASSWORD" \
             --set-file tlsSecrets.crt=./crt.pem \
             --set-file tlsSecrets.key=./key.pem
