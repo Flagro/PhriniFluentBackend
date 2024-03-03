@@ -36,6 +36,14 @@ jobs:
         run: |
           kubectl get ns phrinifluent || kubectl create ns phrinifluent
 
+      - name: Install yq (YAML Processor)
+        run: sudo snap install yq
+    
+      - name: Update Chart.yaml
+        run: |
+          yq eval -i ".version = \"${{ steps.latest_tag.outputs.tag }}\"" ./helm/Chart.yaml
+          yq eval -i ".appVersion = \"${{ steps.latest_tag.outputs.tag }}\"" ./helm/Chart.yaml
+
       - name: Set up Helm
         uses: azure/setup-helm@v1
 
