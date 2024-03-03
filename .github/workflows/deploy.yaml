@@ -76,5 +76,5 @@ jobs:
             --set backendSecrets.adminUsername="$ADMIN_USERNAME" \
             --set backendSecrets.adminEmail="$ADMIN_EMAIL" \
             --set backendSecrets.adminPassword="$ADMIN_PASSWORD" \
-            --set-file tlsSecrets.crt="crt.pem" \
-            --set-file tlsSecrets.key="key.pem"
+            --set-file tlsSecrets.crt="./crt.pem" \
+            --set-file tlsSecrets.key="./key.pem"
