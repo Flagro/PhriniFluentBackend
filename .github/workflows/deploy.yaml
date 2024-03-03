@@ -46,15 +46,6 @@ jobs:
       #   run: helm repo update
 
       - name: Deploy with Helm
-        env:
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          SSL_CERTIFICATE: ${{ secrets.SSL_CERTIFICATE }}
-          SSL_KEY: ${{ secrets.SSL_KEY }}
         run: |
           helm upgrade --install ${{ steps.latest_tag.outputs.tag }} ./helm \
             --namespace phrinifluent \
