@@ -38,7 +38,7 @@ jobs:
 
       - name: Install yq (YAML Processor)
         run: sudo snap install yq
-    
+
       - name: Update Chart.yaml
         run: |
           yq eval -i ".version = \"${{ steps.latest_tag.outputs.tag }}\"" ./helm/Chart.yaml
