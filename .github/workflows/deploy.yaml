@@ -67,7 +67,7 @@ jobs:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
         run: |
-          helm install --help
+          helm upgrade --help
           helm upgrade --install phrinifluent ./helm \
             --namespace phrinifluent \
             --set backendDeployment.phrinifluentBackend.image.tag=${{ steps.latest_tag.outputs.tag }} \
