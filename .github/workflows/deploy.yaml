@@ -63,11 +63,11 @@ jobs:
           helm upgrade --install phrinifluent ./helm \
             --namespace phrinifluent \
             --set backendDeployment.phrinifluentBackend.image.tag=${{ steps.latest_tag.outputs.tag }} \
-            --set dbSecrets.user=${{ secrets.DB_USER }} \
-            --set dbSecrets.password=${{ secrets.DB_PASSWORD }} \
-            --set backendSecrets.secretKey=${{ secrets.SECRET_KEY }} \
-            --set backendSecrets.adminUsername=${{ secrets.ADMIN_USERNAME }} \
-            --set backendSecrets.adminEmail=${{ secrets.ADMIN_EMAIL }} \
-            --set backendSecrets.adminPassword=${{ secrets.ADMIN_PASSWORD }} \
+            --set dbSecrets.user="${{ secrets.DB_USER }}" \
+            --set dbSecrets.password="${{ secrets.DB_PASSWORD }}" \
+            --set backendSecrets.secretKey="${{ secrets.SECRET_KEY }}" \
+            --set backendSecrets.adminUsername="${{ secrets.ADMIN_USERNAME }}" \
+            --set backendSecrets.adminEmail="${{ secrets.ADMIN_EMAIL }}" \
+            --set backendSecrets.adminPassword="${{ secrets.ADMIN_PASSWORD }}" \
             --set-file tlsSecrets.crt=./crt.pem \
             --set-file tlsSecrets.key=./key.pem
