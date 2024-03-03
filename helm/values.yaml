@@ -10,7 +10,7 @@ backendDeployment:
   phrinifluentBackend:
     image:
       repository: ghcr.io/flagro/phrinifluentbackend
-      tag: latest
+      tag: ""
   phrinifluentBackendSetup:
     args:
       - |

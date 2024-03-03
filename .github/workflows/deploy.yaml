@@ -49,6 +49,7 @@ jobs:
         run: |
           helm upgrade --install ${{ steps.latest_tag.outputs.tag }} ./helm \
             --namespace phrinifluent \
+            --set backendDeployment.phrinifluentBackend.image.tag=${{ steps.latest_tag.outputs.tag }} \
             --set image.tag=${{ steps.latest_tag.outputs.tag }} \
             --set dbSecrets.user=${{ secrets.DB_USER }} \
             --set dbSecrets.password=${{ secrets.DB_PASSWORD }} \
