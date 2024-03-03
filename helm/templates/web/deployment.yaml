@@ -24,7 +24,8 @@ spec:
         - name: phrinifluent-backend-setup
           image: {{ .Values.backendDeployment.phrinifluentBackendSetup.image.repository }}:{{.Values.backendDeployment.phrinifluentBackendSetup.image.tag | default .Chart.AppVersion}}
           command: ["/bin/sh", "-c"]
-          args: {{- toYaml .Values.backendDeployment.phrinifluentBackendSetup.args | nindent 8 }}          
+          args:
+            {{- toYaml .Values.backendDeployment.phrinifluentBackendSetup.args | nindent 12 }}
           envFrom:
             - secretRef:
                 name: {{ include "flatchart.fullname" . }}-backend-secrets
@@ -35,8 +36,8 @@ spec:
             - configMapRef:
                 name: {{ include "flatchart.fullname" . }}-db-config
           env:
-          - name: KUBERNETES_CLUSTER_DOMAIN
-            value: {{ quote .Values.kubernetesClusterDomain }}
+            - name: KUBERNETES_CLUSTER_DOMAIN
+              value: {{ quote .Values.kubernetesClusterDomain }}
           resources: {}
           volumeMounts:
             - mountPath: /app/staticfiles/
