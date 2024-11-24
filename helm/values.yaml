@@ -26,7 +26,7 @@ dbDeployment:
   phrinifluentDb:
     image:
       repository: postgres
-      tag: latest
+      tag: "16"
   replicas: 1
 
 nginxDeployment:
