@@ -48,6 +48,18 @@ Our backend is crafted with care using Django and Django REST Framework (DRF), w
      ```
    - This magic spell runs the `migrate` command inside the 'web' service container.
 
+### 🚀 Local setup
+
+#### 🚀 Run migration inside container:
+```bash
+docker exec -it phrinifluentbackend-web-1 python manage.py migrate
+```
+
+#### 🚀 Import words using admin console:
+1. Create a user in your docker image: `docker exec -it phrinifluentbackend-web-1 python manage.py createadmin`
+2. Go to the admin panel in your browser: `http://127.0.0.1:8000/admin/login/?next=/admin/` and enter credentials from your env file.
+3. Trigger the endpoint in your browser: `http://127.0.0.1:8000/phrini_fluent_users/import-words/` that will import the default words list.
+
 ## 👐 Collaboration
 🤝 Your contributions bring PhriniFluent to life! Whether it's a bug fix, a feature, or just a bit of wisdom, we're all ears. Check out our [issues page](https://github.com/Flagro/PhriniFluentBackend/issues) for current quests and adventures!
 
