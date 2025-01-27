@@ -31,11 +31,11 @@ Our backend is crafted with care using Django and Django REST Framework (DRF), w
 - `Word`: 🧩 Individual words that paint our thoughts.
 - `WordDescription`: 🖋️ Meanings and nuances of each word.
 
-#### 🚀 API Endpoints:
-- `GET /public_word_groups`: Explore public word groups.
-- `GET /private_word_groups`: Your personal linguistic treasure.
-- `GET /word_group/{group_id}/random_word`: Discover a random word.
-- `POST /word/{word_id}/similarity`: Compare and learn.
+#### 🚀 Words API Endpoints:
+- `GET /phrini_fluent_words/word-groups/public/`: Explore public word groups.
+- `GET /phrini_fluent_words/word-groups/private/`: Your personal linguistic treasure.
+- `GET /phrini_fluent_words/word-groups/{group_id}/random`: Discover a random word.
+- `POST /phrini_fluent_words/words/{word_id}/similarity`: Compare and learn.
 
 ## 🚀 Setup Instructions
 1. **Docker Setup:**
