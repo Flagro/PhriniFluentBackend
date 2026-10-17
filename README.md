@@ -1,5 +1,11 @@
 # 🌍 PhriniFluent Backend
 
+> [!NOTE]
+> **No longer live.** PhriniFluent was rebuilt in October 2026 and now runs at
+> https://fluent.phriniverse.com (https://phrinifluent.com redirects there; the
+> api.phrinifluent.com API is retired). This repository is no longer maintained and
+> stays as a reference implementation of the original Django backend.
+
 ![PhriniFluent Logo](logo.png)
 
 🎉 Welcome to the *backend repository* of **PhriniFluent**, an open-source language learning platform that's all about making language learning fun and accessible! This repository is the heart and soul of PhriniFluent, powering all the amazing features our users love.
